@@ -10,7 +10,7 @@ import '../model/user_model.dart';
 class ApiService {
   Future<List<UserModel>?> getUsers() async {
     try {
-      var url = Uri.parse(ApiConstants.baseUrl + ApiConstants.usersEndpoint);
+      var url = Uri.parse(Constants.baseUrl + Constants.usersEndpoint);
       var response = await http.get(url);
       if (response.statusCode == 200) {
         List<UserModel> _model = userModelFromJson(response.body);
@@ -24,7 +24,7 @@ class ApiService {
   Future<LoginModel> getLoginData(String user, String pwd) async {
     try {
       var url = Uri.parse(
-          "${ApiConstants.baseUrl}${ApiConstants.usersEndpoint}$user/$pwd");
+          "${Constants.baseUrl}${Constants.usersEndpoint}$user/$pwd");
       var response = await http.get(url);
       if (response.statusCode == 200) {
         Map<String, dynamic> valueMap = json.decode(response.body);

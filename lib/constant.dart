@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ApiConstants {
+class Constants {
   //http://kgkdam.com:3910/kgkapi/smartservice/slogin/50226/LiveTest1234
 
   static String baseUrl = 'http://kgkdam.com:3910/kgkapi';
@@ -28,6 +28,12 @@ class ApiConstants {
       builder: (BuildContext context) {
         return alert;
       },
+    );
+  }
+
+  static snackBar(BuildContext context, String msg) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(msg)),
     );
   }
 }

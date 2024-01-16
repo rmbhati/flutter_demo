@@ -13,7 +13,6 @@ class Login extends StatefulWidget {
 class LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,12 +92,9 @@ class LoginState extends State<Login> {
                           .getLoginData("50226", "LiveTest1234"));
                       String ddd =
                           "${userModel.sts} ${userModel.message}\nINFO\n${userModel.data?[0].empID} ${userModel.data?[0].fullName}";
-                      ApiConstants.alertDialog(context, ddd);
+                      Constants.snackBar(context, ddd);
                     } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                            content: Text('Please enter all details')),
-                      );
+                      Constants.snackBar(context, "Please enter all details");
                     }
                   },
                   child: const Text(
