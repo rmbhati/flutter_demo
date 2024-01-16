@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 class Constants {
-  //http://kgkdam.com:3910/kgkapi/smartservice/slogin/50226/LiveTest1234
-
   static String baseUrl = 'http://kgkdam.com:3910/kgkapi';
   static String usersEndpoint = '/smartservice/slogin/';
 
@@ -38,13 +36,12 @@ class Constants {
   }
 
   static loader(BuildContext context, String msg) {
-
     AlertDialog alert = AlertDialog(
       content: Row(children: [
-        CircularProgressIndicator(
+        const CircularProgressIndicator(
           backgroundColor: Colors.red,
         ),
-        Container(margin: EdgeInsets.only(left: 7), child: Text("Loading...")),
+        Container(margin: const EdgeInsets.only(left: 10,right: 10), child: Text(msg)),
       ]),
     );
     showDialog(

@@ -1,3 +1,4 @@
+//{"result":"true","data":[{"EMP_ID":50226,"FULL_NAME":"Karthigeyan M"}]}
 class LoginModel {
   bool sts;
   String message;
@@ -19,22 +20,11 @@ class LoginModel {
     }
   }
 
-  /*factory LoginModel.fromJson(Map<String, dynamic> json) => LoginModel(
-        sts: json["STATUS"],
-        message: json["MESSAGE"],
-        data: LoginData.fromJson(json["data"]),
-      );*/
-
   Map<String, dynamic> toJson() => {
         "STATUS": sts,
         "MESSAGE": message,
         "data": data,
       };
-
-  @override
-  String toString() {
-    return '{ $sts, $message, $data }';
-  }
 }
 
 class LoginData {
