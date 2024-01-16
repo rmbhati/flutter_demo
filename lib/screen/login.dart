@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 
+import '../model/login_model.dart';
 import '../model/user_model.dart';
 import '../service/api_service.dart';
 
@@ -13,22 +14,19 @@ class Login extends StatefulWidget {
 }
 
 class LoginState extends State<Login> {
-  void _getData() async {
-    List<UserModel>? _userModel = (await ApiService().getUsers())!;
-    //Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
-  }
-
-  showAlertDialog(BuildContext context, List<UserModel> userModel) {
+  showAlertDialog(BuildContext context, LoginModel userModel) {
     // set up the button
     Widget okButton = TextButton(
       child: Text("OK"),
       onPressed: () {},
     );
 
+    String ddd = "${userModel.sts} ${userModel.message}\nINFO\n${userModel.data?[0].empID} ${userModel.data?[0].fullName}";
+
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text("My title"),
-      content: Text(userModel.toString()),
+      content: Text(ddd),
       actions: [
         okButton,
       ],
@@ -100,10 +98,11 @@ class LoginState extends State<Login> {
               onPressed: () async {
                 /*Navigator.push(context,
                             MaterialPageRoute(builder: (_) => HomePage()));*/
-                //_getData();
 
-                List<UserModel>? _userModel = (await ApiService().getUsers())!;
-                showAlertDialog(context, _userModel);
+                LoginModel loginModel =
+                    (await ApiService().getLoginData("50226", "LiveTest1234"));
+
+                showAlertDialog(context, loginModel);
               },
               child: const Text(
                 'LOG IN',
@@ -116,62 +115,6 @@ class LoginState extends State<Login> {
       //],
       //),
       //)
-    );
-  }
-}
-
-class _LoginState extends State<Login> {
-  late List<UserModel>? _userModel = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _getData();
-  }
-
-  void _getData() async {
-    _userModel = (await ApiService().getUsers())!;
-    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('REST API Example'),
-      ),
-      body: _userModel == null || _userModel!.isEmpty
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
-          : ListView.builder(
-              itemCount: _userModel!.length,
-              itemBuilder: (context, index) {
-                return Card(
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(_userModel![index].id.toString()),
-                          Text(_userModel![index].username),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 20.0,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(_userModel![index].email),
-                          Text(_userModel![index].website),
-                        ],
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
     );
   }
 }
