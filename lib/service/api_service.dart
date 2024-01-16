@@ -26,13 +26,11 @@ class ApiService {
       var url = Uri.parse(
           "${ApiConstants.baseUrl}${ApiConstants.usersEndpoint}$user/$pwd");
       var response = await http.get(url);
-
       if (response.statusCode == 200) {
         Map<String, dynamic> valueMap = json.decode(response.body);
         LoginModel user = LoginModel.fromJson(valueMap);
         return user;
       } else {
-        //return LoginModel(sts: false, message: "Failed to login");
         return LoginModel(false, "Failed to login", null);
       }
     } catch (e) {
