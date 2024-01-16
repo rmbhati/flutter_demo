@@ -84,15 +84,16 @@ class LoginState extends State<Login> {
                     left: 20.0, right: 20.0, top: 10, bottom: 0.0),
                 child: TextButton(
                   onPressed: () async {
-                    /*Navigator.push(context,
-                            MaterialPageRoute(builder: (_) => HomePage()));*/
-
                     if (_formKey.currentState!.validate()) {
+                      Constants.loader(context, "msg");
                       LoginModel userModel = (await ApiService()
                           .getLoginData("50226", "LiveTest1234"));
                       String ddd =
                           "${userModel.sts} ${userModel.message}\nINFO\n${userModel.data?[0].empID} ${userModel.data?[0].fullName}";
+                      Navigator.pop(context);
                       Constants.snackBar(context, ddd);
+                      /*Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => Login()));*/
                     } else {
                       Constants.snackBar(context, "Please enter all details");
                     }
