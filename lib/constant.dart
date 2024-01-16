@@ -41,7 +41,9 @@ class Constants {
         const CircularProgressIndicator(
           backgroundColor: Colors.red,
         ),
-        Container(margin: const EdgeInsets.only(left: 10,right: 10), child: Text(msg)),
+        Container(
+            margin: const EdgeInsets.only(left: 10, right: 10),
+            child: Text(msg)),
       ]),
     );
     showDialog(
