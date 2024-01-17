@@ -39,7 +39,23 @@ class LoginState extends State<Login> {
     }
     Navigator.pop(context); //hide loader
     Constants.snackBar(context, ddd);
-    Navigator.push(context, MaterialPageRoute(builder: (_) => const Home()));
+    //Navigator.push(context, MaterialPageRoute(builder: (_) => const Home()));
+  }
+
+  void loginAPICallPost(BuildContext context) async {
+    Constants.loader(context, "Loading...");
+    LoginModel loginModel = (await ApiService()
+        .sendLoginPostRequest(context, userControl.text, pwdControl.text));
+    String ddd;
+    if (loginModel.sts) {
+      ddd =
+          "${loginModel.sts} : ${loginModel.message}";
+    } else {
+      ddd = "${loginModel.sts} : ${loginModel.message}";
+    }
+    Navigator.pop(context); //hide loader
+    Constants.snackBar(context, ddd);
+    //Navigator.push(context, MaterialPageRoute(builder: (_) => const Home()));
   }
 
   @override
@@ -118,6 +134,7 @@ class LoginState extends State<Login> {
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       loginAPICall(context);
+                      //loginAPICallPost(context);
                     } else {
                       Constants.snackBar(context, "Please enter all details");
                     }

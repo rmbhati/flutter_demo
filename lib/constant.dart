@@ -1,11 +1,11 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Constants {
   static String baseUrl = 'http://kgkdam.com:3910/kgkapi';
   static String usersEndpoint = '/smartservice/slogin/';
+
+  static Uri uri = Uri.parse("http://10.163.2.11:8080/kgkapi/login");
 
   static alertDialog(BuildContext context, String message) {
     // set up the button
@@ -62,6 +62,7 @@ class Constants {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setInt(key, value);
   }
+
   static Future<int> getIntSP(String key) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getInt(key)!;
