@@ -41,7 +41,7 @@ dependencies:
   responsive_sizer: ^3.2.0
   http: ^0.13.4
   flutter_logs: ^2.1.10
-
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:

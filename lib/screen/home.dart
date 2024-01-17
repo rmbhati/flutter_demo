@@ -4,16 +4,14 @@ import '../model/login_model.dart';
 import '../service/api_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'home.dart';
-
-class Login extends StatefulWidget {
-  const Login({super.key});
+class Home extends StatefulWidget {
+  const Home({super.key});
 
   @override
-  LoginState createState() => LoginState();
+  HomeState createState() => HomeState();
 }
 
-class LoginState extends State<Login> {
+class HomeState extends State<Home> {
   final _formKey = GlobalKey<FormState>();
   final userControl = TextEditingController();
   final pwdControl = TextEditingController();
@@ -23,23 +21,6 @@ class LoginState extends State<Login> {
     userControl.dispose();
     pwdControl.dispose();
     super.dispose();
-  }
-
-  void loginAPICall(BuildContext context) async {
-    Constants.loader(context, "Loading...");
-    LoginModel loginModel =
-        (await ApiService().getLoginData(userControl.text, pwdControl.text));
-    String ddd;
-    if (loginModel.sts) {
-      ddd =
-          "${loginModel.sts} : ${loginModel.message}\nINFO\n${loginModel.data?[0].empID} ${loginModel.data?[0].fullName}";
-      Constants.addIntSP("userId", loginModel.data![0].empID);
-    } else {
-      ddd = "${loginModel.sts} : ${loginModel.message}";
-    }
-    Navigator.pop(context); //hide loader
-    Constants.snackBar(context, ddd);
-    Navigator.push(context, MaterialPageRoute(builder: (_) => const Home()));
   }
 
   @override
@@ -115,9 +96,30 @@ class LoginState extends State<Login> {
                 margin: const EdgeInsets.only(
                     left: 20.0, right: 20.0, top: 10, bottom: 0.0),
                 child: TextButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      loginAPICall(context);
+                      SharedPreferences prefs = await SharedPreferences.getInstance();
+                      Constants.snackBar(
+                          context, "User ID: ${prefs.getInt('userId')}");
+
+                      Constants.loader(context, "Loading...");
+
+                      LoginModel userModel = (await ApiService()
+                          .getLoginData(userControl.text, pwdControl.text));
+
+                      String ddd;
+                      if (userModel.sts) {
+                        ddd =
+                            "${userModel.sts} : ${userModel.message}\nINFO\n${userModel.data?[0].empID} ${userModel.data?[0].fullName}";
+                        Constants.addIntSP("userId", userModel.data![0].empID);
+                      } else {
+                        ddd = "${userModel.sts} : ${userModel.message}";
+                      }
+
+                      Navigator.pop(context);
+                      Constants.snackBar(context, ddd);
+                      /*Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => Login()));*/
                     } else {
                       Constants.snackBar(context, "Please enter all details");
                     }

@@ -1,4 +1,7 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Constants {
   static String baseUrl = 'http://kgkdam.com:3910/kgkapi';
@@ -53,5 +56,14 @@ class Constants {
         return alert;
       },
     );
+  }
+
+  static addIntSP(String key, int value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setInt(key, value);
+  }
+  static Future<int> getIntSP(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getInt(key)!;
   }
 }
