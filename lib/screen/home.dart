@@ -108,16 +108,16 @@ class HomeState extends State<Home> {
                           .getLoginData(userControl.text, pwdControl.text));
 
                       String ddd;
-                      if (userModel.sts) {
+                      /*if (userModel.sts) {
                         ddd =
                             "${userModel.sts} : ${userModel.message}\nINFO\n${userModel.data?[0].empID} ${userModel.data?[0].fullName}";
                         Constants.addIntSP("userId", userModel.data![0].empID);
                       } else {
                         ddd = "${userModel.sts} : ${userModel.message}";
-                      }
+                      }*/
 
                       Navigator.pop(context);
-                      Constants.snackBar(context, ddd);
+                      //Constants.snackBar(context, ddd);
                       /*Navigator.push(context,
                             MaterialPageRoute(builder: (_) => Login()));*/
                     } else {

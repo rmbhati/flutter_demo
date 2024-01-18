@@ -1,6 +1,6 @@
 //{"result":"true","data":[{"EMP_ID":50226,"FULL_NAME":"Karthigeyan M"}]}
 class LoginModel {
-  bool sts;
+  String sts;
   String message;
   List<LoginData>? data;
 
@@ -13,15 +13,15 @@ class LoginModel {
           dataObsJson.map((dataJson) => LoginData.fromJson(dataJson)).toList();
 
       return LoginModel(
-          json['STATUS'] as bool, json['MESSAGE'] as String, data);
+          json['result'] as String, json['MESSAGE'] as String, data);
     } else {
       return LoginModel(
-          json['STATUS'] as bool, json['MESSAGE'] as String, null);
+          json['result'] as String, json['MESSAGE'] as String, null);
     }
   }
 
   Map<String, dynamic> toJson() => {
-        "STATUS": sts,
+        "result": sts,
         "MESSAGE": message,
         "data": data,
       };

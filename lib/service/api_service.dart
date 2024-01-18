@@ -19,10 +19,10 @@ class ApiService {
         LoginModel user = LoginModel.fromJson(valueMap);
         return user;
       } else {
-        return LoginModel(false, "Failed to login", null);
+        return LoginModel("false", "Failed to login", null);
       }
     } catch (e) {
-      return LoginModel(false, "Failed to login", null);
+      return LoginModel("false", "Failed to login", null);
     }
   }
 
@@ -33,9 +33,9 @@ class ApiService {
         body: jsonEncode({"userId": "7010", "password": "Rajag@!23"}));
 
     if (response.statusCode == 200) {
-      return LoginModel(true, response.body.toString(), null);
+      return LoginModel("true", response.body.toString(), null);
     } else {
-      return LoginModel(false, "Failed to login", null);
+      return LoginModel("false", "Failed to login", null);
     }
   }
 
@@ -50,5 +50,6 @@ class ApiService {
     } catch (e) {
       log(e.toString());
     }
+    return null;
   }
 }

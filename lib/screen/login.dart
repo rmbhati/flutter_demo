@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../constant.dart';
 import '../model/login_model.dart';
 import '../service/api_service.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'home.dart';
 
@@ -30,7 +29,7 @@ class LoginState extends State<Login> {
     LoginModel loginModel =
         (await ApiService().getLoginData(userControl.text, pwdControl.text));
     String ddd;
-    if (loginModel.sts) {
+    if (loginModel.sts == "true") {
       ddd =
           "${loginModel.sts} : ${loginModel.message}\nINFO\n${loginModel.data?[0].empID} ${loginModel.data?[0].fullName}";
       Constants.addIntSP("userId", loginModel.data![0].empID);
@@ -47,9 +46,8 @@ class LoginState extends State<Login> {
     LoginModel loginModel = (await ApiService()
         .sendLoginPostRequest(context, userControl.text, pwdControl.text));
     String ddd;
-    if (loginModel.sts) {
-      ddd =
-          "${loginModel.sts} : ${loginModel.message}";
+    if (loginModel.sts=="true") {
+      ddd = "${loginModel.sts} : ${loginModel.message}";
     } else {
       ddd = "${loginModel.sts} : ${loginModel.message}";
     }
