@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../constant.dart';
 import '../model/login_model.dart';
 import '../service/api_service.dart';
@@ -16,6 +17,17 @@ class LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
   final userControl = TextEditingController();
   final pwdControl = TextEditingController();
+  late SharedPreferences prefs;
+
+  @override
+  void initState() {
+    super.initState();
+    sharedData();
+  }
+
+  void sharedData() async {
+    prefs = await SharedPreferences.getInstance();
+  }
 
   @override
   void dispose() {
@@ -28,17 +40,19 @@ class LoginState extends State<Login> {
     Constants.loader(context, "Loading...");
     LoginModel loginModel =
         (await ApiService().getLoginData(userControl.text, pwdControl.text));
+
+    Navigator.pop(context); //hide loader/back press
     String ddd;
     if (loginModel.sts == "true") {
       ddd =
           "${loginModel.sts} : ${loginModel.message}\nINFO\n${loginModel.data?[0].empID} ${loginModel.data?[0].fullName}";
-      Constants.addIntSP("userId", loginModel.data![0].empID);
+      Constants.addIntSP(Constants.userId, loginModel.data![0].empID);
+      Constants.addStringSP(Constants.userName, loginModel.data![0].fullName);
+      Navigator.push(context, MaterialPageRoute(builder: (_) => const Home()));
     } else {
       ddd = "${loginModel.sts} : ${loginModel.message}";
     }
-    Navigator.pop(context); //hide loader
     Constants.snackBar(context, ddd);
-    //Navigator.push(context, MaterialPageRoute(builder: (_) => const Home()));
   }
 
   void loginAPICallPost(BuildContext context) async {
@@ -46,7 +60,7 @@ class LoginState extends State<Login> {
     LoginModel loginModel = (await ApiService()
         .sendLoginPostRequest(context, userControl.text, pwdControl.text));
     String ddd;
-    if (loginModel.sts=="true") {
+    if (loginModel.sts == "True") {
       ddd = "${loginModel.sts} : ${loginModel.message}";
     } else {
       ddd = "${loginModel.sts} : ${loginModel.message}";
@@ -80,6 +94,7 @@ class LoginState extends State<Login> {
                 padding: const EdgeInsets.only(
                     left: 20.0, right: 20.0, top: 15, bottom: 0),
                 child: TextFormField(
+                  //initialValue: '50226',
                   controller: userControl,
                   textInputAction: TextInputAction.next,
                   validator: (value) {
@@ -99,6 +114,7 @@ class LoginState extends State<Login> {
                     left: 20.0, right: 20.0, top: 15, bottom: 15),
                 child: TextFormField(
                   obscureText: true,
+                  //initialValue: 'LiveTest1234',
                   controller: pwdControl,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -131,6 +147,8 @@ class LoginState extends State<Login> {
                 child: TextButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
+                      Constants.snackBar(
+                          context, "${prefs.getInt(Constants.userId)}");
                       loginAPICall(context);
                       //loginAPICallPost(context);
                     } else {

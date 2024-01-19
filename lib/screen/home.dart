@@ -12,129 +12,73 @@ class Home extends StatefulWidget {
 }
 
 class HomeState extends State<Home> {
-  final _formKey = GlobalKey<FormState>();
-  final userControl = TextEditingController();
-  final pwdControl = TextEditingController();
+  late SharedPreferences prefs;
+  String userName = '';
 
   @override
-  void dispose() {
-    userControl.dispose();
-    pwdControl.dispose();
-    super.dispose();
+  void initState() {
+    super.initState();
+    getUserData();
+  }
+
+  void getUserData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    userName = prefs.getString(Constants.userName)!;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Form(
-          key: _formKey,
-          child: Column(
-            children: <Widget>[
+        resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+            title: const Text('Flutter Demo',
+                style: TextStyle(fontFamily: 'Mulish', fontSize: 18.0)),
+            automaticallyImplyLeading: false,
+            elevation: 1,
+            centerTitle: true,
+            shape: const Border(
+                bottom: BorderSide(color: Colors.black, width: 0.1)),
+            actions: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(top: 60.0),
-                child: SizedBox(
-                    width: 200,
-                    height: 200,
-                    child: Image.asset('assets/kgk.png')),
-              ),
-              const Text(
-                "Digital Jewelry Library",
-                style: TextStyle(
-                    color: Colors.black, fontSize: 22, fontFamily: 'Mulish'),
+                  padding: const EdgeInsets.only(right: 20.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      //Constants.addIntSP("userId", 0);
+                      Navigator.pop(context); //hide loader
+                    },
+                    child: const Icon(
+                      Icons.arrow_circle_down,
+                      size: 26.0,
+                    ),
+                  )),
+            ]),
+        body:  SizedBox(
+            width: double.infinity,
+            child: Column(children: <Widget>[
+              const Padding(
+                padding: EdgeInsets.only(top: 20.0),
+                child: Text(
+                  "Welcome",
+                  style: TextStyle(
+                      letterSpacing: 1,
+                      color: Colors.black54,
+                      fontFamily: "Mulish",
+                      fontWeight: FontWeight.w600,
+                      fontSize: 12.0),
+                ),
               ),
               Padding(
-                padding: const EdgeInsets.only(
-                    left: 20.0, right: 20.0, top: 15, bottom: 0),
-                child: TextFormField(
-                  controller: userControl,
-                  textInputAction: TextInputAction.next,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter userid';
-                    }
-                    return null;
-                  },
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(), hintText: 'Userid'),
+                padding: const EdgeInsets.only(top: 0),
+                child: Text(
+                  userName,
                   style: const TextStyle(
-                      color: Colors.black, fontFamily: 'Mulish'),
+                      letterSpacing: 2,
+                      color: Colors.black54,
+                      fontFamily: "Mulish",
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18.0),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    left: 20.0, right: 20.0, top: 15, bottom: 15),
-                child: TextFormField(
-                  obscureText: true,
-                  controller: pwdControl,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter password';
-                    }
-                    return null;
-                  },
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(), hintText: 'Password'),
-                  style: const TextStyle(
-                      color: Colors.black, fontFamily: 'Mulish'),
-                ),
-              ),
-              TextButton(
-                onPressed: () {
-                  //TODO FORGOT PASSWORD SCREEN GOES HERE
-                },
-                child: const Text(
-                  'Forgot Password?',
-                  style: TextStyle(color: Colors.black, fontFamily: "Mulish"),
-                ),
-              ),
-              Container(
-                width: 250,
-                decoration: BoxDecoration(
-                    color: const Color(0xFFEFEFEF),
-                    borderRadius: BorderRadius.circular(10)),
-                margin: const EdgeInsets.only(
-                    left: 20.0, right: 20.0, top: 10, bottom: 0.0),
-                child: TextButton(
-                  onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
-                      SharedPreferences prefs = await SharedPreferences.getInstance();
-                      Constants.snackBar(
-                          context, "User ID: ${prefs.getInt('userId')}");
-
-                      Constants.loader(context, "Loading...");
-
-                      LoginModel userModel = (await ApiService()
-                          .getLoginData(userControl.text, pwdControl.text));
-
-                      String ddd;
-                      /*if (userModel.sts) {
-                        ddd =
-                            "${userModel.sts} : ${userModel.message}\nINFO\n${userModel.data?[0].empID} ${userModel.data?[0].fullName}";
-                        Constants.addIntSP("userId", userModel.data![0].empID);
-                      } else {
-                        ddd = "${userModel.sts} : ${userModel.message}";
-                      }*/
-
-                      Navigator.pop(context);
-                      //Constants.snackBar(context, ddd);
-                      /*Navigator.push(context,
-                            MaterialPageRoute(builder: (_) => Login()));*/
-                    } else {
-                      Constants.snackBar(context, "Please enter all details");
-                    }
-                  },
-                  child: const Text(
-                    'LOG IN',
-                    style: TextStyle(color: Colors.black, fontFamily: "Mulish"),
-                  ),
-                ),
-              ),
-            ],
-          )),
-      //],
-      //),
-      //)
-    );
+              )
+            ])));
   }
 }

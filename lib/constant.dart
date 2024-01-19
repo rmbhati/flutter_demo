@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Constants {
-  static String baseUrl = 'http://kgkdam.com:3910/kgkapi';
+  static Uri uri =
+      Uri.parse("http://10.163.2.11:8080/kgkapi/login"); //post method
+  static String baseUrl = 'http://kgkdam.com:3910/kgkapi'; //get method
   static String usersEndpoint = '/smartservice/slogin/';
 
-  static Uri uri = Uri.parse("http://10.163.2.11:8080/kgkapi/login");
+  static String userId = 'userId';
+  static String userName = 'userName';
 
   static alertDialog(BuildContext context, String message) {
     // set up the button
@@ -34,7 +37,7 @@ class Constants {
 
   static snackBar(BuildContext context, String msg) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(msg)),
+      SnackBar(content: Text(msg), duration: const Duration(seconds: 2)),
     );
   }
 
@@ -44,9 +47,7 @@ class Constants {
         const CircularProgressIndicator(
           backgroundColor: Colors.red,
         ),
-        Container(
-            margin: const EdgeInsets.only(left: 10, right: 10),
-            child: Text(msg)),
+        Container(margin: const EdgeInsets.only(left: 10), child: Text(msg)),
       ]),
     );
     showDialog(
@@ -63,8 +64,8 @@ class Constants {
     prefs.setInt(key, value);
   }
 
-  static Future<int> getIntSP(String key) async {
+  static addStringSP(String key, String value) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getInt(key)!;
+    prefs.setString(key, value);
   }
 }

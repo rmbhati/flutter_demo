@@ -22,7 +22,7 @@ class ApiService {
         return LoginModel("false", "Failed to login", null);
       }
     } catch (e) {
-      return LoginModel("false", "Failed to login", null);
+      return LoginModel("false", "Failed to login ${e.toString()}", null);
     }
   }
 
