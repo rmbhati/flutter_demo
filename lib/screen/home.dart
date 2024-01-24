@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/screen/login.dart';
 import '../constant.dart';
-import '../model/login_model.dart';
-import '../service/api_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
@@ -12,18 +11,16 @@ class Home extends StatefulWidget {
 }
 
 class HomeState extends State<Home> {
-  late SharedPreferences prefs;
   String userName = '';
+  List<HomeItems> items = [];
 
   @override
   void initState() {
     super.initState();
-    getUserData();
-  }
-
-  void getUserData() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    userName = prefs.getString(Constants.userName)!;
+    initPreferences();
+    items.add(HomeItems(name: "Approvals"));
+    items.add(HomeItems(name: "Menu 2"));
+    items.add(HomeItems(name: "Menu 3"));
   }
 
   @override
@@ -43,8 +40,9 @@ class HomeState extends State<Home> {
                   padding: const EdgeInsets.only(right: 20.0),
                   child: GestureDetector(
                     onTap: () {
-                      //Constants.addIntSP("userId", 0);
-                      Navigator.pop(context); //hide loader
+                      Constants.addIntSP(Constants.userId, 0);
+                      Navigator.pushReplacement(
+                          context, MaterialPageRoute(builder: (_) => Login()));
                     },
                     child: const Icon(
                       Icons.arrow_circle_down,
@@ -52,11 +50,11 @@ class HomeState extends State<Home> {
                     ),
                   )),
             ]),
-        body:  SizedBox(
+        body: SizedBox(
             width: double.infinity,
             child: Column(children: <Widget>[
               const Padding(
-                padding: EdgeInsets.only(top: 20.0),
+                padding: EdgeInsets.only(top: 50.0),
                 child: Text(
                   "Welcome",
                   style: TextStyle(
@@ -68,7 +66,7 @@ class HomeState extends State<Home> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 0),
+                padding: const EdgeInsets.only(bottom: 20),
                 child: Text(
                   userName,
                   style: const TextStyle(
@@ -78,7 +76,62 @@ class HomeState extends State<Home> {
                       fontWeight: FontWeight.w600,
                       fontSize: 18.0),
                 ),
-              )
+              ),
+              Expanded(
+                  child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                child: GridView.builder(
+                    itemCount: items.length,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3),
+                    itemBuilder: (_, int index) {
+                      return InkWell(
+                          onTap: () {
+                            Constants.snackBar(context, items[index].name);
+                          },
+                          child: Card(
+                              child: Column(children: <Widget>[
+                            const Padding(
+                              padding: EdgeInsets.only(top: 15.0),
+                              child: Image(
+                                  width: 50,
+                                  height: 45,
+                                  //image: items[index].image,
+                                  image: AssetImage('assets/kgk.png')),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10.0),
+                              child: Text(items[index].name,
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                      letterSpacing: 1,
+                                      color: Colors.black54,
+                                      fontFamily: "Mulish",
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 14.0)),
+                            )
+                          ])));
+                    }),
+              )),
             ])));
   }
+
+  initPreferences() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      userName = prefs.getString(Constants.userName)!;
+    });
+  }
+}
+
+class HomeItems {
+  String name;
+
+  //Image image;
+
+  HomeItems({
+    required this.name,
+    //required this.image,
+  });
 }

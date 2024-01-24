@@ -68,4 +68,5 @@ class Constants {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(key, value);
   }
+
 }

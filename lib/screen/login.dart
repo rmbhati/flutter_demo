@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../constant.dart';
 import '../model/login_model.dart';
@@ -25,49 +26,11 @@ class LoginState extends State<Login> {
     sharedData();
   }
 
-  void sharedData() async {
-    prefs = await SharedPreferences.getInstance();
-  }
-
   @override
   void dispose() {
     userControl.dispose();
     pwdControl.dispose();
     super.dispose();
-  }
-
-  void loginAPICall(BuildContext context) async {
-    Constants.loader(context, "Loading...");
-    LoginModel loginModel =
-        (await ApiService().getLoginData(userControl.text, pwdControl.text));
-
-    Navigator.pop(context); //hide loader/back press
-    String ddd;
-    if (loginModel.sts == "true") {
-      ddd =
-          "${loginModel.sts} : ${loginModel.message}\nINFO\n${loginModel.data?[0].empID} ${loginModel.data?[0].fullName}";
-      Constants.addIntSP(Constants.userId, loginModel.data![0].empID);
-      Constants.addStringSP(Constants.userName, loginModel.data![0].fullName);
-      Navigator.push(context, MaterialPageRoute(builder: (_) => const Home()));
-    } else {
-      ddd = "${loginModel.sts} : ${loginModel.message}";
-    }
-    Constants.snackBar(context, ddd);
-  }
-
-  void loginAPICallPost(BuildContext context) async {
-    Constants.loader(context, "Loading...");
-    LoginModel loginModel = (await ApiService()
-        .sendLoginPostRequest(context, userControl.text, pwdControl.text));
-    String ddd;
-    if (loginModel.sts == "True") {
-      ddd = "${loginModel.sts} : ${loginModel.message}";
-    } else {
-      ddd = "${loginModel.sts} : ${loginModel.message}";
-    }
-    Navigator.pop(context); //hide loader
-    Constants.snackBar(context, ddd);
-    //Navigator.push(context, MaterialPageRoute(builder: (_) => const Home()));
   }
 
   @override
@@ -167,5 +130,48 @@ class LoginState extends State<Login> {
       //),
       //)
     );
+  }
+
+  void sharedData() async {
+    prefs = await SharedPreferences.getInstance();
+    if (prefs.getInt(Constants.userId) != 0) {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (_) => const Home()));
+    }
+  }
+
+  void loginAPICall(BuildContext context) async {
+    Constants.loader(context, "Loading...");
+    LoginModel loginModel =
+        (await ApiService().getLoginData(userControl.text, pwdControl.text));
+
+    Navigator.pop(context); //hide loader/back press
+    String ddd;
+    if (loginModel.sts == "true") {
+      ddd =
+          "${loginModel.sts} : ${loginModel.message}\nINFO\n${loginModel.data?[0].empID} ${loginModel.data?[0].fullName}";
+      Constants.addIntSP(Constants.userId, loginModel.data![0].empID);
+      Constants.addStringSP(Constants.userName, loginModel.data![0].fullName);
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (_) => const Home()));
+    } else {
+      ddd = "${loginModel.sts} : ${loginModel.message}";
+    }
+    Constants.snackBar(context, ddd);
+  }
+
+  void loginAPICallPost(BuildContext context) async {
+    Constants.loader(context, "Loading...");
+    LoginModel loginModel = (await ApiService()
+        .sendLoginPostRequest(context, userControl.text, pwdControl.text));
+    String ddd;
+    if (loginModel.sts == "True") {
+      ddd = "${loginModel.sts} : ${loginModel.message}";
+    } else {
+      ddd = "${loginModel.sts} : ${loginModel.message}";
+    }
+    Navigator.pop(context); //hide loader
+    Constants.snackBar(context, ddd);
+    //Navigator.push(context, MaterialPageRoute(builder: (_) => const Home()));
   }
 }
