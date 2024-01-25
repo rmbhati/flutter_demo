@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/screen/approval_list.dart';
 import 'package:flutter_demo/screen/login.dart';
 import '../constant.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -88,7 +89,14 @@ class HomeState extends State<Home> {
                     itemBuilder: (_, int index) {
                       return InkWell(
                           onTap: () {
-                            Constants.snackBar(context, items[index].name);
+                            if (items[index].name == "Approvals") {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => const ApprovalsList(title: "Approvals")));
+                            } else {
+                              Constants.snackBar(context, items[index].name);
+                            }
                           },
                           child: Card(
                               child: Column(children: <Widget>[
