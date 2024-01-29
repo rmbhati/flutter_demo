@@ -6,8 +6,7 @@ class Constants {
       Uri.parse("http://10.163.2.11:8080/kgkapi/login"); //post method
   static String baseUrl = 'http://kgkdam.com:3910/kgkapi'; //get method
   static String usersEndpoint = '/smartservice/slogin/';
-  static String get_all_bc_count = '/api/a/sql/get_all_bc_count/all/userid';
-  //http://kgkdam.com:3910/kgkapi/api/a/sql/get_all_bc_count/all/52495
+  static String get_all_bc_count = '/api/a/sql/get_all_bc_count/all/';
 
   //Shared Preference saved data
   static String userId = 'userId';

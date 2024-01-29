@@ -18,13 +18,6 @@ class LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
   final userControl = TextEditingController();
   final pwdControl = TextEditingController();
-  late SharedPreferences prefs;
-
-  @override
-  void initState() {
-    super.initState();
-    sharedData();
-  }
 
   @override
   void dispose() {
@@ -110,8 +103,6 @@ class LoginState extends State<Login> {
                 child: TextButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      Constants.snackBar(
-                          context, "${prefs.getInt(Constants.userId)}");
                       loginAPICall(context);
                       //loginAPICallPost(context);
                     } else {
@@ -130,14 +121,6 @@ class LoginState extends State<Login> {
       //),
       //)
     );
-  }
-
-  void sharedData() async {
-    prefs = await SharedPreferences.getInstance();
-    if (prefs.getInt(Constants.userId) != 0) {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (_) => const Home()));
-    }
   }
 
   void loginAPICall(BuildContext context) async {

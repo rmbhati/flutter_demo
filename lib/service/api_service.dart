@@ -1,7 +1,9 @@
 import 'dart:developer';
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/model/approvals_model.dart';
 import 'package:http/http.dart' as http;
 
 import '../constant.dart';
@@ -39,17 +41,21 @@ class ApiService {
     }
   }
 
-  Future<List<UserModel>?> getUsers() async {
+  Future<ApproveModel> getApprovalsData(int userID) async {
     try {
-      var url = Uri.parse(Constants.baseUrl + Constants.usersEndpoint);
+      var url =
+          Uri.parse("${Constants.baseUrl}${Constants.get_all_bc_count}$userID");
       var response = await http.get(url);
       if (response.statusCode == 200) {
-        List<UserModel> _model = userModelFromJson(response.body);
-        return _model;
+        Map<String, dynamic> valueMap = json.decode(response.body);
+        ApproveModel model = ApproveModel.fromJson(valueMap);
+        return model;
+      } else {
+        return ApproveModel(false, "Failed to Load Data", null);
       }
     } catch (e) {
       log(e.toString());
+      return ApproveModel(false, "Failed to Load Data", null);
     }
-    return null;
   }
 }
