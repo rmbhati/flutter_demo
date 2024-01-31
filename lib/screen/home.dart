@@ -5,6 +5,8 @@ import 'package:flutter_demo/screen/widget_demo.dart';
 import '../constant.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../model/home_model.dart';
+
 class Home extends StatefulWidget {
   const Home({super.key});
 
@@ -93,27 +95,26 @@ class HomeState extends State<Home> {
                             moveNextPage(items[index].name);
                           },
                           child: Card(
-                              child: Column(children: <Widget>[
-                            const Padding(
-                              padding: EdgeInsets.only(top: 15.0),
-                              child: Image(
-                                  width: 50,
-                                  height: 45,
-                                  //image: items[index].image,
-                                  image: AssetImage('assets/kgk.png')),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 10.0),
-                              child: Text(items[index].name,
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                      letterSpacing: 1,
-                                      color: Colors.black54,
-                                      fontFamily: "Mulish",
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 14.0)),
-                            )
-                          ])));
+                              child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                const Image(
+                                    width: double.infinity,
+                                    height: 60,
+                                    //image: items[index].image,
+                                    image: AssetImage('assets/kgk.png')),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 10.0),
+                                  child: Text(items[index].name,
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                          letterSpacing: 1,
+                                          color: Colors.black54,
+                                          fontFamily: "Mulish",
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 16.0)),
+                                )
+                              ])));
                     }),
               )),
             ])));
@@ -137,15 +138,4 @@ class HomeState extends State<Home> {
       Constants.snackBar(context, from);
     }
   }
-}
-
-class HomeItems {
-  String name;
-
-  //Image image;
-
-  HomeItems({
-    required this.name,
-    //required this.image,
-  });
 }

@@ -39,10 +39,10 @@ class LoginState extends State<Login> {
               child: Column( mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.only(top: 0, bottom: 5),
+                    padding: const EdgeInsets.only(top: 0, bottom: 0),
                     child: SizedBox(
-                      width: 120,
-                      height: 120,
+                      width: double.infinity,
+                      height: 180,
                       child: Image.asset('assets/kgk.png'),
                     ),
                   ),
