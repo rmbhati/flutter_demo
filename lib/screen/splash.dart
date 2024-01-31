@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_demo/screen/login.dart';
 import '../constant.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -37,18 +38,21 @@ class SplashState extends State<Splash> {
   initPreferences() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      userId = prefs.getInt(Constants.userId)!;
+      if (prefs.getInt(Constants.userId) == null) {
+        userId = 0;
+      } else {
+        userId = prefs.getInt(Constants.userId)!;
+      }
     });
 
-    Timer(const Duration(seconds: 5), () {
-      if (userId == 0) {
+    Timer(const Duration(seconds: 2), () {
+      if (userId == null || userId == 0) {
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (_) => const Login()));
       } else {
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (_) => const Home()));
       }
-    }
-    );
+    });
   }
 }

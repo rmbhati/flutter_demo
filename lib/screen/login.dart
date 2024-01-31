@@ -18,6 +18,7 @@ class LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
   final userControl = TextEditingController();
   final pwdControl = TextEditingController();
+  bool passwordVisible = false;
 
   @override
   void dispose() {
@@ -29,98 +30,120 @@ class LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Form(
-          key: _formKey,
-          child: Column(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.only(top: 60.0),
-                child: SizedBox(
-                    width: 200,
-                    height: 200,
-                    child: Image.asset('assets/kgk.png')),
-              ),
-              const Text(
-                "Digital Jewelry Library",
-                style: TextStyle(
-                    color: Colors.black, fontSize: 22, fontFamily: 'Mulish'),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    left: 20.0, right: 20.0, top: 15, bottom: 0),
-                child: TextFormField(
-                  //initialValue: '50226',
-                  controller: userControl,
-                  textInputAction: TextInputAction.next,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter userid';
-                    }
-                    return null;
-                  },
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(), hintText: 'Userid'),
-                  style: const TextStyle(
-                      color: Colors.black, fontFamily: 'Mulish'),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    left: 20.0, right: 20.0, top: 15, bottom: 15),
-                child: TextFormField(
-                  obscureText: true,
-                  //initialValue: 'LiveTest1234',
-                  controller: pwdControl,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter password';
-                    }
-                    return null;
-                  },
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(), hintText: 'Password'),
-                  style: const TextStyle(
-                      color: Colors.black, fontFamily: 'Mulish'),
-                ),
-              ),
-              TextButton(
-                onPressed: () {
-                  //TODO FORGOT PASSWORD SCREEN GOES HERE
-                },
-                child: const Text(
-                  'Forgot Password?',
-                  style: TextStyle(color: Colors.black, fontFamily: "Mulish"),
-                ),
-              ),
-              Container(
-                width: 250,
-                decoration: BoxDecoration(
-                    color: const Color(0xFFEFEFEF),
-                    borderRadius: BorderRadius.circular(10)),
-                margin: const EdgeInsets.only(
-                    left: 20.0, right: 20.0, top: 10, bottom: 0.0),
-                child: TextButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      loginAPICall(context);
-                      //loginAPICallPost(context);
-                    } else {
-                      Constants.snackBar(context, "Please enter all details");
-                    }
-                  },
-                  child: const Text(
-                    'LOG IN',
-                    style: TextStyle(color: Colors.black, fontFamily: "Mulish"),
+        resizeToAvoidBottomInset: false,
+        body: Center(
+          widthFactor: double.infinity,
+          heightFactor: double.infinity,
+          child: Form(
+              key: _formKey,
+              child: Column( mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(top: 0, bottom: 5),
+                    child: SizedBox(
+                      width: 120,
+                      height: 120,
+                      child: Image.asset('assets/kgk.png'),
+                    ),
                   ),
-                ),
-              ),
-            ],
-          )),
-      //],
-      //),
-      //)
-    );
+                  const Text(
+                    "Digital Jewelry Library",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 22,
+                        fontFamily: 'Mulish'),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 20.0, right: 20.0, top: 15, bottom: 0),
+                    child: TextFormField(
+                      //initialValue: '50226',
+                      controller: userControl,
+                      textInputAction: TextInputAction.next,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter userid';
+                        }
+                        return null;
+                      },
+                      decoration: const InputDecoration(
+                          prefixIcon: Icon(Icons.person),
+                          border: OutlineInputBorder(),
+                          hintText: 'Userid'),
+                      style: const TextStyle(
+                          color: Colors.black, fontFamily: 'Mulish'),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        left: 20.0, right: 20.0, top: 15, bottom: 15),
+                    child: TextFormField(
+                      obscureText: !passwordVisible,
+                      //initialValue: 'LiveTest1234',
+                      controller: pwdControl,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter password';
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                          prefixIcon: const Icon(Icons.lock),
+                          suffixIcon: IconButton(
+                              icon: Icon(
+                                passwordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: Theme.of(context).primaryColorDark,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  passwordVisible = !passwordVisible;
+                                });
+                              }),
+                          border: const OutlineInputBorder(),
+                          hintText: 'Password'),
+                      style: const TextStyle(
+                          color: Colors.black, fontFamily: 'Mulish'),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      //TODO FORGOT PASSWORD SCREEN GOES HERE
+                    },
+                    child: const Text(
+                      'Forgot Password?',
+                      style:
+                          TextStyle(color: Colors.black, fontFamily: "Mulish"),
+                    ),
+                  ),
+                  Container(
+                    width: 250,
+                    decoration: BoxDecoration(
+                        color: const Color(0xFFEFEFEF),
+                        borderRadius: BorderRadius.circular(10)),
+                    margin: const EdgeInsets.only(
+                        left: 20.0, right: 20.0, top: 10, bottom: 0.0),
+                    child: TextButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          loginAPICall(context);
+                          //loginAPICallPost(context);
+                        } else {
+                          Constants.snackBar(
+                              context, "Please enter all details");
+                        }
+                      },
+                      child: const Text(
+                        'LOG IN',
+                        style: TextStyle(
+                            color: Colors.black, fontFamily: "Mulish"),
+                      ),
+                    ),
+                  ),
+                ],
+              )),
+        ));
   }
 
   void loginAPICall(BuildContext context) async {

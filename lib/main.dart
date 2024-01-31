@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_demo/screen/login.dart';
 import 'package:flutter_demo/screen/splash.dart';
 
 void main() {

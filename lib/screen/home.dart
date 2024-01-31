@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/screen/approval_list.dart';
 import 'package:flutter_demo/screen/login.dart';
+import 'package:flutter_demo/screen/widget_demo.dart';
 import '../constant.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -20,7 +21,7 @@ class HomeState extends State<Home> {
     super.initState();
     initPreferences();
     items.add(HomeItems(name: "Approvals"));
-    items.add(HomeItems(name: "Menu 2"));
+    items.add(HomeItems(name: "Widgets"));
     items.add(HomeItems(name: "Menu 3"));
   }
 
@@ -89,14 +90,7 @@ class HomeState extends State<Home> {
                     itemBuilder: (_, int index) {
                       return InkWell(
                           onTap: () {
-                            if (items[index].name == "Approvals") {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => const ApprovalsList(title: "Approvals")));
-                            } else {
-                              Constants.snackBar(context, items[index].name);
-                            }
+                            moveNextPage(items[index].name);
                           },
                           child: Card(
                               child: Column(children: <Widget>[
@@ -130,6 +124,18 @@ class HomeState extends State<Home> {
     setState(() {
       userName = prefs.getString(Constants.userName)!;
     });
+  }
+
+  void moveNextPage(String from) {
+    if (from == "Approvals") {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (_) => ApprovalsList(title: from)));
+    } else if (from == "Widgets") {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (_) => WidgetDemo(title: from)));
+    } else {
+      Constants.snackBar(context, from);
+    }
   }
 }
 

@@ -42,6 +42,9 @@ dependencies:
   http: ^0.13.4
   flutter_logs: ^2.1.10
   shared_preferences: ^2.2.2
+  flutter_native_splash: ^2.3.10
+
+
 
 dev_dependencies:
   flutter_test:
@@ -54,6 +57,23 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
   retrofit_generator: ^4.2.0
+
+flutter_native_splash:
+  color: "#FFFFFF"
+  image: assets/kgk.png
+  color_dark: "#FFFFFF"
+  image_dark: assets/kgk.png
+
+  # add this
+  android_12:
+    icon_background_color: "#FFFFFF"
+    image: assets/kgk.png
+    icon_background_color_dark: "#FFFFFF"
+    image_dark: assets/kgk.png
+    android: true
+    ios: true
+    web: true
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
