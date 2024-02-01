@@ -58,8 +58,11 @@ class LoginState extends State<Login> {
                         fontFamily: 'Mulish'),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(
-                        left: 20.0, right: 20.0, top: 15, bottom: 0),
+                    padding: EdgeInsets.only(
+                        left: size.height * 0.02,
+                        right: size.height * 0.02,
+                        top: size.height * 0.02,
+                        bottom: 0),
                     child: TextFormField(
                       //initialValue: '50226',
                       controller: userControl,
@@ -70,17 +73,23 @@ class LoginState extends State<Login> {
                         }
                         return null;
                       },
-                      decoration: const InputDecoration(
-                          prefixIcon: Icon(Icons.person),
-                          border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                          prefixIcon:
+                              Icon(Icons.person, size: size.height * 0.025),
+                          border: const OutlineInputBorder(),
                           hintText: 'Userid'),
-                      style: const TextStyle(
-                          color: Colors.black, fontFamily: 'Mulish'),
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'Mulish',
+                          fontSize: size.height * 0.02),
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(
-                        left: 20.0, right: 20.0, top: 15, bottom: 15),
+                    padding: EdgeInsets.only(
+                        left: size.height * 0.02,
+                        right: size.height * 0.02,
+                        top: size.height * 0.02,
+                        bottom: size.height * 0.02),
                     child: TextFormField(
                       obscureText: !passwordVisible,
                       //initialValue: 'LiveTest1234',
@@ -92,9 +101,11 @@ class LoginState extends State<Login> {
                         return null;
                       },
                       decoration: InputDecoration(
-                          prefixIcon: const Icon(Icons.lock),
+                          prefixIcon:  Icon(Icons.lock,
+                            size: size.height * 0.025,),
                           suffixIcon: IconButton(
                               icon: Icon(
+                              size: size.height * 0.025,
                                 passwordVisible
                                     ? Icons.visibility
                                     : Icons.visibility_off,
@@ -107,27 +118,34 @@ class LoginState extends State<Login> {
                               }),
                           border: const OutlineInputBorder(),
                           hintText: 'Password'),
-                      style: const TextStyle(
-                          color: Colors.black, fontFamily: 'Mulish'),
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'Mulish',
+                          fontSize: size.height * 0.02),
                     ),
                   ),
                   TextButton(
                     onPressed: () {
                       //TODO FORGOT PASSWORD SCREEN GOES HERE
                     },
-                    child: const Text(
+                    child: Text(
                       'Forgot Password?',
-                      style:
-                          TextStyle(color: Colors.black, fontFamily: "Mulish"),
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: "Mulish",
+                          fontSize: size.height * 0.02),
                     ),
                   ),
                   Container(
-                    width: 250,
+                    width: size.height * 0.3,
                     decoration: BoxDecoration(
                         color: const Color(0xFFEFEFEF),
                         borderRadius: BorderRadius.circular(10)),
-                    margin: const EdgeInsets.only(
-                        left: 20.0, right: 20.0, top: 10, bottom: 0.0),
+                    margin: EdgeInsets.only(
+                        left: size.height * 0.02,
+                        right: size.height * 0.02,
+                        top: size.height * 0.01,
+                        bottom: 0.0),
                     child: TextButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
@@ -138,10 +156,12 @@ class LoginState extends State<Login> {
                               context, "Please enter all details");
                         }
                       },
-                      child: const Text(
+                      child: Text(
                         'LOG IN',
                         style: TextStyle(
-                            color: Colors.black, fontFamily: "Mulish"),
+                            color: Colors.black,
+                            fontFamily: "Mulish",
+                            fontSize: size.height * 0.025),
                       ),
                     ),
                   ),

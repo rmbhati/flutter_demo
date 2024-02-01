@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/model/approvals_model.dart';
@@ -8,7 +7,6 @@ import 'package:http/http.dart' as http;
 
 import '../constant.dart';
 import '../model/login_model.dart';
-import '../model/user_model.dart';
 
 class ApiService {
   Future<LoginModel> getLoginData(String user, String pwd) async {
