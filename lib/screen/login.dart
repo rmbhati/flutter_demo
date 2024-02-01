@@ -30,7 +30,6 @@ class LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final orientation = MediaQuery.of(context).orientation;
 
     return Scaffold(
         resizeToAvoidBottomInset: false,
