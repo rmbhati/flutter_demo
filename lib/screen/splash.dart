@@ -26,12 +26,16 @@ class SplashState extends State<Splash> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    final size = MediaQuery.of(context).size;
+    return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Image(
-          width: double.infinity,
-          height: double.infinity,
-          image: AssetImage('assets/kgk.png')),
+      body: Center(
+        child: Image(
+            width: size.height * 0.2,
+            height: size.height * 0.2,
+            image: const AssetImage('assets/kgk.png'),
+            fit: BoxFit.fill),
+      ),
     );
   }
 

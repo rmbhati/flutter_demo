@@ -29,6 +29,9 @@ class LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final orientation = MediaQuery.of(context).orientation;
+
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: Center(
@@ -36,21 +39,22 @@ class LoginState extends State<Login> {
           heightFactor: double.infinity,
           child: Form(
               key: _formKey,
-              child: Column( mainAxisAlignment: MainAxisAlignment.center,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.only(top: 0, bottom: 0),
+                    padding: EdgeInsets.only(bottom: size.height * 0.015),
                     child: SizedBox(
-                      width: double.infinity,
-                      height: 180,
-                      child: Image.asset('assets/kgk.png'),
+                      width: size.height * 0.15,
+                      height: size.height * 0.15,
+                      child: Image.asset(fit: BoxFit.fill, 'assets/kgk.png'),
                     ),
                   ),
-                  const Text(
+                  Text(
                     "Digital Jewelry Library",
                     style: TextStyle(
                         color: Colors.black,
-                        fontSize: 22,
+                        fontSize: size.height * 0.025,
                         fontFamily: 'Mulish'),
                   ),
                   Padding(
