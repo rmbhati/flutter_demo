@@ -19,6 +19,7 @@ class LoginState extends State<Login> {
   final userControl = TextEditingController();
   final pwdControl = TextEditingController();
   bool passwordVisible = false;
+  late Size size;
 
   @override
   void dispose() {
@@ -29,7 +30,7 @@ class LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
+    size = MediaQuery.of(context).size;
 
     return Scaffold(
         resizeToAvoidBottomInset: false,
@@ -100,11 +101,13 @@ class LoginState extends State<Login> {
                         return null;
                       },
                       decoration: InputDecoration(
-                          prefixIcon:  Icon(Icons.lock,
-                            size: size.height * 0.025,),
+                          prefixIcon: Icon(
+                            Icons.lock,
+                            size: size.height * 0.025,
+                          ),
                           suffixIcon: IconButton(
                               icon: Icon(
-                              size: size.height * 0.025,
+                                size: size.height * 0.025,
                                 passwordVisible
                                     ? Icons.visibility
                                     : Icons.visibility_off,
@@ -152,7 +155,7 @@ class LoginState extends State<Login> {
                           //loginAPICallPost(context);
                         } else {
                           Constants.snackBar(
-                              context, "Please enter all details");
+                              context, "Please enter all details",size);
                         }
                       },
                       child: Text(
@@ -170,7 +173,7 @@ class LoginState extends State<Login> {
   }
 
   void loginAPICall(BuildContext context) async {
-    Constants.loader(context, "Loading...");
+    Constants.loader(context, "Loading...",size);
     LoginModel loginModel =
         (await ApiService().getLoginData(userControl.text, pwdControl.text));
 
@@ -186,11 +189,11 @@ class LoginState extends State<Login> {
     } else {
       ddd = "${loginModel.sts} : ${loginModel.message}";
     }
-    Constants.snackBar(context, ddd);
+    Constants.snackBar(context, ddd,size);
   }
 
   void loginAPICallPost(BuildContext context) async {
-    Constants.loader(context, "Loading...");
+    Constants.loader(context, "Loading...",size);
     LoginModel loginModel = (await ApiService()
         .sendLoginPostRequest(context, userControl.text, pwdControl.text));
     String ddd;
@@ -200,7 +203,7 @@ class LoginState extends State<Login> {
       ddd = "${loginModel.sts} : ${loginModel.message}";
     }
     Navigator.pop(context); //hide loader
-    Constants.snackBar(context, ddd);
+    Constants.snackBar(context, ddd,size);
     //Navigator.push(context, MaterialPageRoute(builder: (_) => const Home()));
   }
 }

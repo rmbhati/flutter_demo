@@ -17,6 +17,7 @@ class Home extends StatefulWidget {
 class HomeState extends State<Home> {
   String userName = '';
   List<HomeItems> items = [];
+  late Size size;
 
   @override
   void initState() {
@@ -29,11 +30,14 @@ class HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+     size = MediaQuery.of(context).size;
+
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-            title: const Text('Flutter Demo',
-                style: TextStyle(fontFamily: 'Mulish', fontSize: 18.0)),
+        appBar: AppBar(toolbarHeight:size.height * 0.05 ,
+            title: Text('Flutter Demo',
+                style: TextStyle(
+                    fontFamily: 'Mulish', fontSize: size.height * 0.023)),
             automaticallyImplyLeading: false,
             elevation: 1,
             centerTitle: true,
@@ -48,16 +52,16 @@ class HomeState extends State<Home> {
                       Navigator.pushReplacement(
                           context, MaterialPageRoute(builder: (_) => Login()));
                     },
-                    child: const Icon(
+                    child:  Icon(
                       Icons.arrow_circle_down,
-                      size: 26.0,
+                      size: size.height * 0.03,
                     ),
                   )),
             ]),
         body: SizedBox(
             width: double.infinity,
             child: Column(children: <Widget>[
-              const Padding(
+               Padding(
                 padding: EdgeInsets.only(top: 50.0),
                 child: Text(
                   "Welcome",
@@ -66,19 +70,19 @@ class HomeState extends State<Home> {
                       color: Colors.black54,
                       fontFamily: "Mulish",
                       fontWeight: FontWeight.w600,
-                      fontSize: 12.0),
+                      fontSize: size.height * 0.02),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 20),
                 child: Text(
                   userName,
-                  style: const TextStyle(
+                  style:  TextStyle(
                       letterSpacing: 2,
                       color: Colors.black54,
                       fontFamily: "Mulish",
                       fontWeight: FontWeight.w600,
-                      fontSize: 18.0),
+                      fontSize: size.height * 0.025),
                 ),
               ),
               Expanded(
@@ -135,7 +139,7 @@ class HomeState extends State<Home> {
       Navigator.push(
           context, MaterialPageRoute(builder: (_) => WidgetDemo(title: from)));
     } else {
-      Constants.snackBar(context, from);
+      Constants.snackBar(context, from,size);
     }
   }
 }

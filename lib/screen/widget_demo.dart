@@ -41,7 +41,7 @@ class WidgetState extends State<WidgetDemo> {
           itemBuilder: (context, index) {
             return InkWell(
                 onTap: () {
-                  Constants.snackBar(context, items[index].name);
+                  //Constants.snackBar(context, items[index].name);
                 },
                 child: Card(
                   margin: const EdgeInsets.all(8),

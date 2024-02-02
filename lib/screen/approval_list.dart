@@ -15,6 +15,7 @@ class ApprovalsList extends StatefulWidget {
 class ApprovalsState extends State<ApprovalsList> {
   int userId = 0;
   List<ApproveData> data = [];
+  late Size size;
 
   @override
   void initState() {
@@ -32,7 +33,7 @@ class ApprovalsState extends State<ApprovalsList> {
 
   _asyncMethod() async {
     if (userId != 0) {
-      Constants.loader(context, "Loading...");
+      Constants.loader(context, "Loading...", size);
       ApproveModel result = (await ApiService().getApprovalsData(userId));
       if (result.sts) {
         Navigator.pop(context); //hide loader/back press
@@ -41,13 +42,14 @@ class ApprovalsState extends State<ApprovalsList> {
         });
       } else {
         Navigator.pop(context); //hide loader/back press
-        Constants.snackBar(context, result.message);
+        Constants.snackBar(context, result.message, size);
       }
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    size = MediaQuery.of(context).size;
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
@@ -62,7 +64,7 @@ class ApprovalsState extends State<ApprovalsList> {
             itemBuilder: (context, index) {
               return InkWell(
                   onTap: () {
-                    Constants.snackBar(context, data[index].code);
+                    //Constants.snackBar(context, data[index].code);
                   },
                   child: Card(
                     margin: const EdgeInsets.all(8),
@@ -71,7 +73,8 @@ class ApprovalsState extends State<ApprovalsList> {
                         child: Row(children: <Widget>[
                           Padding(
                             padding: const EdgeInsets.all(5),
-                            child: Text("${data[index].code} (${data[index].count})",
+                            child: Text(
+                                "${data[index].code} (${data[index].count})",
                                 style: const TextStyle(
                                     letterSpacing: 1,
                                     color: Colors.black54,
