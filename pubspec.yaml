@@ -44,7 +44,12 @@ dependencies:
   shared_preferences: ^2.2.2
   flutter_native_splash: ^2.3.10
 
-
+#Window configurat for exe generation
+msix_config :
+  display_name: Flutter Demo
+  publisher_display_name: KGK
+  identity_name: Flutter App
+  msix_version : 1.0
 
 dev_dependencies:
   flutter_test:

@@ -30,16 +30,19 @@ class HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-     size = MediaQuery.of(context).size;
-
+    size = MediaQuery.of(context).size;
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: AppBar(toolbarHeight:size.height * 0.05 ,
+        appBar: AppBar(
+            backgroundColor: Colors.deepPurple,
+            toolbarHeight: size.height * 0.05,
             title: Text('Flutter Demo',
                 style: TextStyle(
-                    fontFamily: 'Mulish', fontSize: size.height * 0.023)),
+                    color: Colors.white,
+                    fontFamily: 'Mulish',
+                    fontSize: size.height * 0.023)),
             automaticallyImplyLeading: false,
-            elevation: 1,
+            elevation: 10,
             centerTitle: true,
             shape: const Border(
                 bottom: BorderSide(color: Colors.black, width: 0.1)),
@@ -52,17 +55,18 @@ class HomeState extends State<Home> {
                       Navigator.pushReplacement(
                           context, MaterialPageRoute(builder: (_) => Login()));
                     },
-                    child:  Icon(
+                    child: Icon(
                       Icons.arrow_circle_down,
                       size: size.height * 0.03,
+                      color: Colors.white,
                     ),
                   )),
             ]),
         body: SizedBox(
             width: double.infinity,
             child: Column(children: <Widget>[
-               Padding(
-                padding: EdgeInsets.only(top: 50.0),
+              Padding(
+                padding: EdgeInsets.only(top: size.height * 0.05),
                 child: Text(
                   "Welcome",
                   style: TextStyle(
@@ -77,7 +81,7 @@ class HomeState extends State<Home> {
                 padding: const EdgeInsets.only(bottom: 20),
                 child: Text(
                   userName,
-                  style:  TextStyle(
+                  style: TextStyle(
                       letterSpacing: 2,
                       color: Colors.black54,
                       fontFamily: "Mulish",
@@ -139,7 +143,7 @@ class HomeState extends State<Home> {
       Navigator.push(
           context, MaterialPageRoute(builder: (_) => WidgetDemo(title: from)));
     } else {
-      Constants.snackBar(context, from,size);
+      Constants.snackBar(context, from, size);
     }
   }
 }
