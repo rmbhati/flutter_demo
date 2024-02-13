@@ -55,9 +55,19 @@ class ApprovalsState extends State<ApprovalsList> {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
+          backgroundColor: Colors.deepPurple,
+          toolbarHeight: size.height * 0.05,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back,
+                size: size.width * 0.05, color: Colors.white),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
           title: Text(widget.title,
-              style: const TextStyle(fontFamily: 'Mulish', fontSize: 18.0)),
-          elevation: 1,
+              style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'Mulish',
+                  fontSize: size.height * 0.023)),
+          elevation: 10,
           shape:
               const Border(bottom: BorderSide(color: Colors.black, width: 0.1)),
         ),
@@ -65,27 +75,23 @@ class ApprovalsState extends State<ApprovalsList> {
             itemCount: data.length,
             itemBuilder: (context, index) {
               return InkWell(
-                  onTap: () {
-                    //Constants.snackBar(context, data[index].code);
-                  },
-                  child: Card(
-                    margin: const EdgeInsets.all(8),
-                    child: Padding(
-                        padding: const EdgeInsets.all(5),
-                        child: Row(children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.all(5),
-                            child: Text(
-                                "${data[index].code} (${data[index].count})",
-                                style: const TextStyle(
-                                    letterSpacing: 1,
-                                    color: Colors.black54,
-                                    fontFamily: "Mulish",
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 14.0)),
-                          ),
-                        ])),
-                  ));
+                onTap: () {
+                  Constants.snackBar(context, data[index].code, size);
+                },
+                child: Card(
+                  margin: EdgeInsets.all(size.width * 0.015),
+                  child: Padding(
+                    padding: EdgeInsets.all(size.width * 0.02),
+                    child: Text("${data[index].code} (${data[index].count})",
+                        style: TextStyle(
+                            letterSpacing: 1,
+                            color: Colors.black54,
+                            fontFamily: "Mulish",
+                            fontWeight: FontWeight.w600,
+                            fontSize: size.height * 0.02)),
+                  ),
+                ),
+              );
             })); // Here you direct access using widget
   }
 }

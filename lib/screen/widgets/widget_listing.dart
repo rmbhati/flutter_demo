@@ -33,9 +33,19 @@ class WidgetState extends State<WidgetListing> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        backgroundColor: Colors.deepPurple,
+        toolbarHeight: size.height * 0.05,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back,
+              size: size.width * 0.05, color: Colors.white),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
         title: Text(widget.title,
-            style: const TextStyle(fontFamily: 'Mulish', fontSize: 18.0)),
-        elevation: 1,
+            style: TextStyle(
+                color: Colors.white,
+                fontFamily: 'Mulish',
+                fontSize: size.height * 0.023)),
+        elevation: 10,
         shape:
             const Border(bottom: BorderSide(color: Colors.black, width: 0.1)),
       ),
@@ -44,7 +54,7 @@ class WidgetState extends State<WidgetListing> {
           itemBuilder: (context, index) {
             return InkWell(
                 onTap: () {
-                  itemClick(context, items[index].name,size);
+                  itemClick(context, items[index].name, size);
                 },
                 child: Card(
                   margin: const EdgeInsets.all(8),

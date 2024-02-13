@@ -79,7 +79,7 @@ class HomeState extends State<Home> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(bottom: 20),
+                padding: EdgeInsets.only(bottom: size.height * 0.05),
                 child: Text(
                   userName,
                   style: TextStyle(
@@ -112,12 +112,11 @@ class HomeState extends State<Home> {
                                     height: size.height * 0.08,
                                     image: const AssetImage('assets/kgk.png')),
                                 Container(
-                                  margin:
-                                      EdgeInsets.only(top: size.width * 0.01),
+                                  margin: EdgeInsets.all(size.width * 0.02),
                                   child: Text(items[index].name,
                                       textAlign: TextAlign.center,
                                       maxLines: 1,
-                                     overflow: TextOverflow.ellipsis,
+                                      overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                           color: Colors.black54,
                                           fontFamily: "Mulish",
