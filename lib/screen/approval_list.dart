@@ -59,7 +59,7 @@ class ApprovalsState extends State<ApprovalsList> {
           toolbarHeight: size.height * 0.05,
           leading: IconButton(
             icon: Icon(Icons.arrow_back,
-                size: size.width * 0.05, color: Colors.white),
+                size: size.height * 0.03, color: Colors.white),
             onPressed: () => Navigator.of(context).pop(),
           ),
           title: Text(widget.title,
