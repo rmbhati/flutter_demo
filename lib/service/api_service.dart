@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_demo/model/approvals_model.dart';
 import 'package:http/http.dart' as http;
 
-import '../constant.dart';
+import '../utils/constant.dart';
 import '../model/login_model.dart';
 
 class ApiService {

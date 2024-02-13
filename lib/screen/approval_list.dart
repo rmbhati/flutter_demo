@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_demo/constant.dart';
+import 'package:flutter_demo/utils/constant.dart';
 import 'package:flutter_demo/model/approvals_model.dart';
 import 'package:flutter_demo/service/api_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../utils/strings.dart';
 
 class ApprovalsList extends StatefulWidget {
   const ApprovalsList({Key? key, required this.title}) : super(key: key);
@@ -33,7 +35,7 @@ class ApprovalsState extends State<ApprovalsList> {
 
   _asyncMethod() async {
     if (userId != 0) {
-      Constants.loader(context, "Loading...", size);
+      Constants.loader(context, Strings.loading, size);
       ApproveModel result = (await ApiService().getApprovalsData(userId));
       if (result.sts) {
         Navigator.pop(context); //hide loader/back press

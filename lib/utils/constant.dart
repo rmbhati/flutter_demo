@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class Constants {
   static Uri uri =
-  Uri.parse("http://10.163.2.11:8080/kgkapi/login"); //post method
+      Uri.parse("http://10.163.2.11:8080/kgkapi/login"); //post method
   static String baseUrl = 'http://kgkdam.com:3910/kgkapi'; //get method
   static String usersEndpoint = '/smartservice/slogin/';
   static String get_all_bc_count = '/api/a/sql/get_all_bc_count/all/';
@@ -38,12 +38,14 @@ class Constants {
     );
   }
 
-  static snackBar(BuildContext context, String msg,Size size) {
+  static snackBar(BuildContext context, String msg, Size size) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(msg, style: TextStyle(
-          color: Colors.white,
-          fontFamily: "Mulish",
-          fontSize: size.height * 0.015)),
+      SnackBar(
+          content: Text(msg,
+              style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: "Mulish",
+                  fontSize: size.height * 0.015)),
           duration: const Duration(seconds: 2)),
     );
   }

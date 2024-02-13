@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/screen/approval_list.dart';
 import 'package:flutter_demo/screen/login.dart';
-import 'package:flutter_demo/screen/widget_demo.dart';
-import '../constant.dart';
+import 'package:flutter_demo/screen/widgets/widget_listing.dart';
+import '../utils/constant.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../model/home_model.dart';
+import '../utils/strings.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -23,9 +24,9 @@ class HomeState extends State<Home> {
   void initState() {
     super.initState();
     initPreferences();
-    items.add(HomeItems(name: "Approvals"));
-    items.add(HomeItems(name: "Widgets"));
-    items.add(HomeItems(name: "Menu 3"));
+    items.add(HomeItems(name: Strings.approvals));
+    items.add(HomeItems(name: Strings.widgets));
+    items.add(HomeItems(name: Strings.menu3));
   }
 
   @override
@@ -36,7 +37,7 @@ class HomeState extends State<Home> {
         appBar: AppBar(
             backgroundColor: Colors.deepPurple,
             toolbarHeight: size.height * 0.05,
-            title: Text('Flutter Demo',
+            title: Text(Strings.digJewLib,
                 style: TextStyle(
                     color: Colors.white,
                     fontFamily: 'Mulish',
@@ -68,7 +69,7 @@ class HomeState extends State<Home> {
               Padding(
                 padding: EdgeInsets.only(top: size.height * 0.05),
                 child: Text(
-                  "Welcome",
+                  Strings.welcome,
                   style: TextStyle(
                       letterSpacing: 1,
                       color: Colors.black54,
@@ -91,7 +92,7 @@ class HomeState extends State<Home> {
               ),
               Expanded(
                   child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                padding: EdgeInsets.symmetric(horizontal: size.width * 0.02),
                 child: GridView.builder(
                     itemCount: items.length,
                     gridDelegate:
@@ -106,21 +107,22 @@ class HomeState extends State<Home> {
                               child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
-                                const Image(
+                                Image(
                                     width: double.infinity,
-                                    height: 60,
-                                    //image: items[index].image,
-                                    image: AssetImage('assets/kgk.png')),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 10.0),
+                                    height: size.height * 0.08,
+                                    image: const AssetImage('assets/kgk.png')),
+                                Container(
+                                  margin:
+                                      EdgeInsets.only(top: size.width * 0.01),
                                   child: Text(items[index].name,
                                       textAlign: TextAlign.center,
-                                      style: const TextStyle(
-                                          letterSpacing: 1,
+                                      maxLines: 1,
+                                     overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
                                           color: Colors.black54,
                                           fontFamily: "Mulish",
                                           fontWeight: FontWeight.w600,
-                                          fontSize: 16.0)),
+                                          fontSize: size.height * 0.02)),
                                 )
                               ])));
                     }),
@@ -136,12 +138,12 @@ class HomeState extends State<Home> {
   }
 
   void moveNextPage(String from) {
-    if (from == "Approvals") {
+    if (from == Strings.approvals) {
       Navigator.push(context,
           MaterialPageRoute(builder: (_) => ApprovalsList(title: from)));
-    } else if (from == "Widgets") {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (_) => WidgetDemo(title: from)));
+    } else if (from == Strings.widgets) {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (_) => WidgetListing(title: from)));
     } else {
       Constants.snackBar(context, from, size);
     }

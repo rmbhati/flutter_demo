@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../constant.dart';
+import '../utils/constant.dart';
 import '../model/login_model.dart';
 import '../service/api_service.dart';
 
+import '../utils/strings.dart';
 import 'home.dart';
 
 class Login extends StatefulWidget {
@@ -51,7 +52,7 @@ class LoginState extends State<Login> {
                     ),
                   ),
                   Text(
-                    "Digital Jewelry Library",
+                    Strings.digJewLib,
                     style: TextStyle(
                         color: Colors.black,
                         fontSize: size.height * 0.025,
@@ -64,12 +65,11 @@ class LoginState extends State<Login> {
                         top: size.height * 0.02,
                         bottom: 0),
                     child: TextFormField(
-                      //initialValue: '50226',
                       controller: userControl,
                       textInputAction: TextInputAction.next,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter userid';
+                          return Strings.enterUserId;
                         }
                         return null;
                       },
@@ -77,7 +77,7 @@ class LoginState extends State<Login> {
                           prefixIcon:
                               Icon(Icons.person, size: size.height * 0.025),
                           border: const OutlineInputBorder(),
-                          hintText: 'Userid'),
+                          hintText: Strings.enterUserId),
                       style: TextStyle(
                           color: Colors.black,
                           fontFamily: 'Mulish',
@@ -92,11 +92,10 @@ class LoginState extends State<Login> {
                         bottom: size.height * 0.02),
                     child: TextFormField(
                       obscureText: !passwordVisible,
-                      //initialValue: 'LiveTest1234',
                       controller: pwdControl,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter password';
+                          return Strings.enterPassword;
                         }
                         return null;
                       },
@@ -119,7 +118,7 @@ class LoginState extends State<Login> {
                                 });
                               }),
                           border: const OutlineInputBorder(),
-                          hintText: 'Password'),
+                          hintText: Strings.enterPassword),
                       style: TextStyle(
                           color: Colors.black,
                           fontFamily: 'Mulish',
@@ -131,7 +130,7 @@ class LoginState extends State<Login> {
                       //TODO FORGOT PASSWORD SCREEN GOES HERE
                     },
                     child: Text(
-                      'Forgot Password?',
+                      Strings.forgotPassword,
                       style: TextStyle(
                           color: Colors.black,
                           fontFamily: "Mulish",
@@ -155,11 +154,11 @@ class LoginState extends State<Login> {
                           //loginAPICallPost(context);
                         } else {
                           Constants.snackBar(
-                              context, "Please enter all details",size);
+                              context, Strings.enterAllDetails, size);
                         }
                       },
                       child: Text(
-                        'LOG IN',
+                        Strings.login,
                         style: TextStyle(
                             color: Colors.black,
                             fontFamily: "Mulish",
@@ -173,7 +172,7 @@ class LoginState extends State<Login> {
   }
 
   void loginAPICall(BuildContext context) async {
-    Constants.loader(context, "Loading...",size);
+    Constants.loader(context, Strings.loading, size);
     LoginModel loginModel =
         (await ApiService().getLoginData(userControl.text, pwdControl.text));
 
@@ -189,11 +188,11 @@ class LoginState extends State<Login> {
     } else {
       ddd = "${loginModel.sts} : ${loginModel.message}";
     }
-    Constants.snackBar(context, ddd,size);
+    Constants.snackBar(context, ddd, size);
   }
 
   void loginAPICallPost(BuildContext context) async {
-    Constants.loader(context, "Loading...",size);
+    Constants.loader(context,Strings.loading, size);
     LoginModel loginModel = (await ApiService()
         .sendLoginPostRequest(context, userControl.text, pwdControl.text));
     String ddd;
@@ -203,7 +202,7 @@ class LoginState extends State<Login> {
       ddd = "${loginModel.sts} : ${loginModel.message}";
     }
     Navigator.pop(context); //hide loader
-    Constants.snackBar(context, ddd,size);
+    Constants.snackBar(context, ddd, size);
     //Navigator.push(context, MaterialPageRoute(builder: (_) => const Home()));
   }
 }
