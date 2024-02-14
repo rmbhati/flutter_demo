@@ -59,7 +59,9 @@ class WidgetState extends State<ButtonsDemo> {
             decoration: BoxDecoration(
                 color: const Color(0xFFEFEFEF),
                 borderRadius: BorderRadius.circular(10)),
-            margin: EdgeInsets.all(                size.height * 0.02,),
+            margin: EdgeInsets.all(
+              size.height * 0.02,
+            ),
             child: TextButton(
               onPressed: () {
                 Constants.snackBar(context, "TextButton Clicked", size);
@@ -135,7 +137,6 @@ class WidgetState extends State<ButtonsDemo> {
                   side: const BorderSide(width: 2.0, color: Colors.blue)),
             ),
           ),
-
         ],
       ),
     );

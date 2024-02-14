@@ -5,6 +5,7 @@ import 'package:flutter_demo/screen/widgets/text_edit.dart';
 import '../../model/home_model.dart';
 import '../../utils/strings.dart';
 import 'buttons.dart';
+import 'image_view.dart';
 
 class WidgetListing extends StatefulWidget {
   const WidgetListing({Key? key, required this.title}) : super(key: key);
@@ -22,6 +23,7 @@ class WidgetState extends State<WidgetListing> {
     super.initState();
     items.add(HomeItems(name: Strings.wTextEdit));
     items.add(HomeItems(name: Strings.wIconBtn));
+    items.add(HomeItems(name: Strings.wImageView));
     items.add(HomeItems(name: "Coming soon..."));
   }
 
@@ -79,6 +81,9 @@ void itemClick(BuildContext context, String name, Size size) {
   }else if (name == Strings.wIconBtn) {
     Navigator.push(
         context, MaterialPageRoute(builder: (_) => ButtonsDemo(title: name)));
+  }else if (name == Strings.wImageView) {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (_) => ImageViewDemo(title: name)));
   } else {
     Constants.snackBar(context, name, size);
   }

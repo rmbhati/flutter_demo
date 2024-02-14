@@ -14,6 +14,7 @@ class Strings {
   static String widgets= 'Widgets';
   static String wTextEdit= 'TextView/EditText';
   static String wIconBtn= 'TextButton/IconButton';
+  static String wImageView= 'ImageView';
 
 
   static String menu3= 'Menu 3 ggb vcbcb cvbx dfvc d';
