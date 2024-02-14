@@ -37,128 +37,105 @@ class WidgetState extends State<ButtonsDemo> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.all(size.width * 0.01),
-            child: TextButton(onPressed: () {  },
+            padding: EdgeInsets.all(size.width * 0.02),
+            child: TextButton(
+              onPressed: () {
+                Constants.snackBar(context, "Button clicked", size);
+              },
+              style: const ButtonStyle(
+                backgroundColor: MaterialStatePropertyAll(Colors.red),
+              ),
               child: Text(
                 "TextButton Normal",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: "Mulish",
+                    fontWeight: FontWeight.w600,
+                    fontSize: size.height * 0.02),
+              ),
+            ),
+          ),
+          Container(
+            decoration: BoxDecoration(
+                color: const Color(0xFFEFEFEF),
+                borderRadius: BorderRadius.circular(10)),
+            margin: EdgeInsets.all(                size.height * 0.02,),
+            child: TextButton(
+              onPressed: () {
+                Constants.snackBar(context, "TextButton Clicked", size);
+              },
+              child: Text(
+                "Button With Container",
                 style: TextStyle(
                     color: Colors.black,
                     fontFamily: "Mulish",
                     fontSize: size.height * 0.02),
               ),
-
             ),
           ),
-          Container(
-            width: size.height * 0.3,
-            decoration: BoxDecoration(
-                color: const Color(0xFFEFEFEF),
-                borderRadius: BorderRadius.circular(10)),
-            margin: EdgeInsets.only(
-                left: size.height * 0.02,
-                right: size.height * 0.02,
-                top: size.height * 0.01,
-                bottom: 0.0),
-            child: TextButton(
+          Padding(
+            padding: EdgeInsets.all(size.width * 0.02),
+            child: TextButton.icon(
               onPressed: () {
-                                 Constants.snackBar(
-                      context, "TextButton Clicked", size);
-                              },
-              child: Text(
-                "Strings.login",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontFamily: "Mulish",
-                    fontSize: size.height * 0.025),
+                Constants.snackBar(context, "Button clicked", size);
+              },
+              icon: Icon(
+                Icons.access_time,
+                size: size.height * 0.025,
+                color: Colors.white,
+              ),
+              label: Text("TextButton.icon",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: "Mulish",
+                      fontWeight: FontWeight.w600,
+                      fontSize: size.height * 0.02)),
+              style: const ButtonStyle(
+                backgroundColor: MaterialStatePropertyAll(Colors.red),
               ),
             ),
           ),
           Padding(
-              padding: EdgeInsets.all(size.width * 0.01),
-              child: Center(
-                child: Text('Text Center',
-                    style: TextStyle(
-                        letterSpacing: 1,
-                        color: Colors.black54,
-                        fontFamily: "Mulish",
-                        fontWeight: FontWeight.w600,
-                        fontSize: size.height * 0.02)),
-              )),
-          Padding(
-              padding: EdgeInsets.all(size.width * 0.01),
-              child: Center(
-                child: Text(
-                    '--------------------------------------------------',
-                    maxLines: 1,
-                    style: TextStyle(
-                        letterSpacing: 1,
-                        color: Colors.black54,
-                        fontFamily: "Mulish",
-                        fontWeight: FontWeight.w600,
-                        fontSize: size.height * 0.02)),
-              )),
-          Padding(
-            padding: EdgeInsets.all(size.width * 0.01),
-            child: RichText(
-              text: TextSpan(
-                text: 'RichText ',
-                style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: size.width * 0.1,
-                    color: Colors.red),
-                children: <TextSpan>[
-                  TextSpan(
-                      text: 'with',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: size.width * 0.06,
-                          color: Colors.green)),
-                  TextSpan(
-                      text: ' TextSpan!',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w900,
-                          fontSize: size.width * 0.05,
-                          color: Colors.blue)),
-                ],
+            padding: EdgeInsets.all(size.width * 0.02),
+            child: OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                padding: EdgeInsets.all(size.width * 0.02),
+                side: const BorderSide(width: 2.0, color: Colors.blue),
               ),
+              onPressed: () {
+                Constants.snackBar(context, "OutlinedButton clicked", size);
+              },
+              child: Text('OutlinedButton',
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: "Mulish",
+                      fontWeight: FontWeight.w600,
+                      fontSize: size.height * 0.02)),
             ),
           ),
           Padding(
-              padding: EdgeInsets.all(size.width * 0.01),
-              child: Center(
-                child: Text(
-                    '--------------------------------------------------',
-                    maxLines: 1,
-                    style: TextStyle(
-                        letterSpacing: 1,
-                        color: Colors.black54,
-                        fontFamily: "Mulish",
-                        fontWeight: FontWeight.w600,
-                        fontSize: size.height * 0.02)),
-              )),
-          Padding(
-              padding: EdgeInsets.only(
-                  left: size.width * 0.025,
-                  right: size.width * 0.025,
-                  bottom: size.width * 0.025),
-              child: TextFormField(
-                decoration: InputDecoration(
-                    border: const OutlineInputBorder(),
-                    labelText: "TextFormField used in Login page"),
-              )),
-          Padding(
-              padding: EdgeInsets.all(size.width * 0.01),
-              child: Center(
-                child: Text(
-                    '--------------------------------------------------',
-                    maxLines: 1,
-                    style: TextStyle(
-                        letterSpacing: 1,
-                        color: Colors.black54,
-                        fontFamily: "Mulish",
-                        fontWeight: FontWeight.w600,
-                        fontSize: size.height * 0.02)),
-              )),
+            padding: EdgeInsets.all(size.width * 0.02),
+            child: OutlinedButton.icon(
+              onPressed: () {
+                Constants.snackBar(context, "OutlinedButton clicked", size);
+              },
+              icon: Icon(
+                Icons.access_time,
+                size: size.height * 0.025,
+                color: Colors.black,
+              ),
+              label: Text("TextButton.icon",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: "Mulish",
+                      fontWeight: FontWeight.w600,
+                      fontSize: size.height * 0.02)),
+              style: OutlinedButton.styleFrom(
+                  padding: EdgeInsets.all(size.width * 0.02),
+                  side: const BorderSide(width: 2.0, color: Colors.blue)),
+            ),
+          ),
+
         ],
       ),
     );
