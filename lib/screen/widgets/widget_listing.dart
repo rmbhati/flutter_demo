@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/screen/widgets/buttons.dart';
+import 'package:flutter_demo/screen/widgets/image_view.dart';
+import 'package:flutter_demo/screen/widgets/selections.dart';
 import 'package:flutter_demo/utils/constant.dart';
 import 'package:flutter_demo/screen/widgets/text_edit.dart';
-
+import 'package:flutter_demo/utils/strings.dart';
 import '../../model/home_model.dart';
-import '../../utils/strings.dart';
-import 'buttons.dart';
-import 'image_view.dart';
 
 class WidgetListing extends StatefulWidget {
   const WidgetListing({Key? key, required this.title}) : super(key: key);
@@ -24,7 +24,8 @@ class WidgetState extends State<WidgetListing> {
     items.add(HomeItems(name: Strings.wTextEdit));
     items.add(HomeItems(name: Strings.wIconBtn));
     items.add(HomeItems(name: Strings.wImageView));
-    items.add(HomeItems(name: "Coming soon..."));
+    items.add(HomeItems(name: Strings.wSelections));
+    items.add(HomeItems(name: Strings.wDropdown));
   }
 
   @override
@@ -60,8 +61,8 @@ class WidgetState extends State<WidgetListing> {
                   margin: EdgeInsets.all(size.width * 0.015),
                   child: Padding(
                     padding: EdgeInsets.all(size.width * 0.02),
-                    child: Text(items[index].name ,
-                        style:  TextStyle(
+                    child: Text(items[index].name,
+                        style: TextStyle(
                             letterSpacing: 1,
                             color: Colors.black54,
                             fontFamily: "Mulish",
@@ -78,13 +79,17 @@ void itemClick(BuildContext context, String name, Size size) {
   if (name == Strings.wTextEdit) {
     Navigator.push(
         context, MaterialPageRoute(builder: (_) => TextEditDemo(title: name)));
-  }else if (name == Strings.wIconBtn) {
+  } else if (name == Strings.wIconBtn) {
     Navigator.push(
         context, MaterialPageRoute(builder: (_) => ButtonsDemo(title: name)));
-  }else if (name == Strings.wImageView) {
+  } else if (name == Strings.wImageView) {
     Navigator.push(
         context, MaterialPageRoute(builder: (_) => ImageViewDemo(title: name)));
-  } else {
-    Constants.snackBar(context, name, size);
+  } else if (name == Strings.wSelections) {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (_) => SelectionsDemo(title: name)));
+  }else if (name == Strings.wDropdown) {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (_) => SelectionsDemo(title: name)));
   }
 }
