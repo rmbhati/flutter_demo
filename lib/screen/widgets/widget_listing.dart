@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/utils/constant.dart';
-import 'package:flutter_demo/model/approvals_model.dart';
 import 'package:flutter_demo/screen/widgets/text_edit.dart';
-import 'package:flutter_demo/service/api_service.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../model/home_model.dart';
 import '../../utils/strings.dart';
+import 'buttons.dart';
 
 class WidgetListing extends StatefulWidget {
   const WidgetListing({Key? key, required this.title}) : super(key: key);
@@ -23,7 +21,7 @@ class WidgetState extends State<WidgetListing> {
   void initState() {
     super.initState();
     items.add(HomeItems(name: Strings.wTextEdit));
-    items.add(HomeItems(name: "Button/ImageBtn/ImageView"));
+    items.add(HomeItems(name: Strings.wIconBtn));
     items.add(HomeItems(name: "Coming soon..."));
   }
 
@@ -57,22 +55,17 @@ class WidgetState extends State<WidgetListing> {
                   itemClick(context, items[index].name, size);
                 },
                 child: Card(
-                  margin: const EdgeInsets.all(8),
+                  margin: EdgeInsets.all(size.width * 0.015),
                   child: Padding(
-                      padding: const EdgeInsets.all(5),
-                      child: Row(children: <Widget>[
-                        Container(
-                          width: size.width * 0.9,
-                          padding: const EdgeInsets.all(5),
-                          child: Text(items[index].name,
-                              style: const TextStyle(
-                                  letterSpacing: 1,
-                                  color: Colors.black54,
-                                  fontFamily: "Mulish",
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 14.0)),
-                        ),
-                      ])),
+                    padding: EdgeInsets.all(size.width * 0.02),
+                    child: Text(items[index].name ,
+                        style:  TextStyle(
+                            letterSpacing: 1,
+                            color: Colors.black54,
+                            fontFamily: "Mulish",
+                            fontWeight: FontWeight.w600,
+                            fontSize: size.height * 0.02)),
+                  ),
                 ));
           }),
     );
@@ -83,6 +76,9 @@ void itemClick(BuildContext context, String name, Size size) {
   if (name == Strings.wTextEdit) {
     Navigator.push(
         context, MaterialPageRoute(builder: (_) => TextEditDemo(title: name)));
+  }else if (name == Strings.wIconBtn) {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (_) => ButtonsDemo(title: name)));
   } else {
     Constants.snackBar(context, name, size);
   }

@@ -1,25 +1,16 @@
 import 'package:flutter/material.dart';
 
-class TextEditDemo extends StatefulWidget {
-  const TextEditDemo({Key? key, required this.title}) : super(key: key);
+import '../../utils/constant.dart';
+
+class ButtonsDemo extends StatefulWidget {
+  const ButtonsDemo({Key? key, required this.title}) : super(key: key);
   final String title;
 
   @override
   WidgetState createState() => WidgetState();
 }
 
-class WidgetState extends State<TextEditDemo> {
-  final textFieldUser = TextEditingController();
-  final textFieldPwd = TextEditingController();
-
-  @override
-  void dispose() {
-    textFieldUser.dispose();
-    textFieldPwd.dispose();
-    super.dispose();
-  }
-
-  //TextFormField
+class WidgetState extends State<ButtonsDemo> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -47,24 +38,40 @@ class WidgetState extends State<TextEditDemo> {
         children: [
           Padding(
             padding: EdgeInsets.all(size.width * 0.01),
-            child: DefaultTextStyle.merge(
-              style: TextStyle(
-                fontSize: size.height * 0.05,
-                fontWeight: FontWeight.w500,
-                color: Colors.black54,
+            child: TextButton(onPressed: () {  },
+              child: Text(
+                "TextButton Normal",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: "Mulish",
+                    fontSize: size.height * 0.02),
               ),
-              child: const Text('DefaultTextStyle'),
+
             ),
           ),
-          Padding(
-            padding: EdgeInsets.all(size.width * 0.01),
-            child: Text('Text Left',
+          Container(
+            width: size.height * 0.3,
+            decoration: BoxDecoration(
+                color: const Color(0xFFEFEFEF),
+                borderRadius: BorderRadius.circular(10)),
+            margin: EdgeInsets.only(
+                left: size.height * 0.02,
+                right: size.height * 0.02,
+                top: size.height * 0.01,
+                bottom: 0.0),
+            child: TextButton(
+              onPressed: () {
+                                 Constants.snackBar(
+                      context, "TextButton Clicked", size);
+                              },
+              child: Text(
+                "Strings.login",
                 style: TextStyle(
-                    letterSpacing: 1,
-                    color: Colors.black54,
+                    color: Colors.black,
                     fontFamily: "Mulish",
-                    fontWeight: FontWeight.w600,
-                    fontSize: size.height * 0.02)),
+                    fontSize: size.height * 0.025),
+              ),
+            ),
           ),
           Padding(
               padding: EdgeInsets.all(size.width * 0.01),
@@ -97,20 +104,20 @@ class WidgetState extends State<TextEditDemo> {
                 text: 'RichText ',
                 style: TextStyle(
                     fontWeight: FontWeight.w600,
-                    fontSize: size.height * 0.1,
+                    fontSize: size.width * 0.1,
                     color: Colors.red),
                 children: <TextSpan>[
                   TextSpan(
                       text: 'with',
                       style: TextStyle(
                           fontWeight: FontWeight.w500,
-                          fontSize: size.height * 0.06,
+                          fontSize: size.width * 0.06,
                           color: Colors.green)),
                   TextSpan(
                       text: ' TextSpan!',
                       style: TextStyle(
                           fontWeight: FontWeight.w900,
-                          fontSize: size.height * 0.05,
+                          fontSize: size.width * 0.05,
                           color: Colors.blue)),
                 ],
               ),
@@ -135,8 +142,8 @@ class WidgetState extends State<TextEditDemo> {
                   right: size.width * 0.025,
                   bottom: size.width * 0.025),
               child: TextFormField(
-                decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
+                decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
                     labelText: "TextFormField used in Login page"),
               )),
           Padding(
@@ -152,65 +159,6 @@ class WidgetState extends State<TextEditDemo> {
                         fontWeight: FontWeight.w600,
                         fontSize: size.height * 0.02)),
               )),
-          Padding(
-            padding: EdgeInsets.all(size.width * 0.02),
-            child: TextField(
-                controller: textFieldUser,
-                textInputAction: TextInputAction.next,
-                textCapitalization: TextCapitalization.words,
-                style: TextStyle(
-    color: Colors.black,
-    fontFamily: 'Mulish',
-    fontSize: size.height * 0.02),
-                decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.person, size: size.height * 0.025),
-                  border: const OutlineInputBorder(),
-                  labelText: 'TextField as Username',
-                )),
-          ),
-          Padding(
-            padding: EdgeInsets.all(size.width * 0.02),
-            child: TextField(
-              controller: textFieldPwd,
-              onSubmitted: (String value) async {
-                await showDialog<void>(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: const Text('Thanks!'),
-                      content: Text(
-                          'Username ${textFieldUser.text}\npassword $value'),
-                      actions: <Widget>[
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: const Text('OK'),
-                        ),
-                      ],
-                    );
-                  },
-                );
-              },
-              obscureText: true,
-              style: TextStyle(
-                  color: Colors.black,
-                  fontFamily: 'Mulish',
-                  fontSize: size.height * 0.02), decoration: InputDecoration(
-                prefixIcon: Icon(Icons.lock, size: size.height * 0.025),
-                suffixIcon: IconButton(
-                    icon: Icon(
-                      size: size.height * 0.025,
-                      Icons.visibility,
-                      color: Theme.of(context).primaryColorDark,
-                    ),
-                    onPressed: () {}),
-                border:
-                    OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
-                labelText: 'TextField Reading values',
-              ),
-            ),
-          ),
         ],
       ),
     );

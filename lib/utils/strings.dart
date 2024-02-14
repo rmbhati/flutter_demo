@@ -13,6 +13,7 @@ class Strings {
   static String approvals= 'Approvals'; 
   static String widgets= 'Widgets';
   static String wTextEdit= 'TextView/EditText';
+  static String wIconBtn= 'TextButton/IconButton';
 
 
   static String menu3= 'Menu 3 ggb vcbcb cvbx dfvc d';
