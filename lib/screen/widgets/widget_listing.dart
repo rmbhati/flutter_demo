@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/screen/widgets/buttons.dart';
+import 'package:flutter_demo/screen/widgets/dropdowns.dart';
 import 'package:flutter_demo/screen/widgets/image_view.dart';
 import 'package:flutter_demo/screen/widgets/selections.dart';
-import 'package:flutter_demo/utils/constant.dart';
 import 'package:flutter_demo/screen/widgets/text_edit.dart';
 import 'package:flutter_demo/utils/strings.dart';
 import '../../model/home_model.dart';
@@ -90,6 +90,6 @@ void itemClick(BuildContext context, String name, Size size) {
         context, MaterialPageRoute(builder: (_) => SelectionsDemo(title: name)));
   }else if (name == Strings.wDropdown) {
     Navigator.push(
-        context, MaterialPageRoute(builder: (_) => SelectionsDemo(title: name)));
+        context, MaterialPageRoute(builder: (_) => DropdownDemo(title: name)));
   }
 }

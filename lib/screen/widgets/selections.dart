@@ -15,6 +15,18 @@ class WidgetState extends State<SelectionsDemo> {
   bool isGame1 = false;
   bool isGame2 = false;
   int selectedOption = 1;
+  bool isSwitch = false;
+
+  final MaterialStateProperty<Icon?> thumbIcon =
+  MaterialStateProperty.resolveWith<Icon?>(
+        (Set<MaterialState> states) {
+      if (states.contains(MaterialState.selected)) {
+        return const Icon(Icons.check);
+      }
+      return const Icon(Icons.close);
+    },
+  );
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -118,18 +130,18 @@ class WidgetState extends State<SelectionsDemo> {
                       side: const BorderSide(width: 2.0, color: Colors.blue),
                     ),
                     onPressed: () {
-                    String data='';
-                    if(isGame1){
-                      data='Football';
-                    }
-                    if(isGame2){
-                      if(data==''){
-                        data='Hockey';
-                      }else{
-                        data='$data, Hockey';
+                      String data = '';
+                      if (isGame1) {
+                        data = 'Football';
                       }
-                    }
-                    Constants.snackBar(context, 'Selected = $data', size);
+                      if (isGame2) {
+                        if (data == '') {
+                          data = 'Hockey';
+                        } else {
+                          data = '$data, Hockey';
+                        }
+                      }
+                      Constants.snackBar(context, 'Selected = $data', size);
                     },
                     child: Text('Checked Data',
                         style: TextStyle(
@@ -156,37 +168,36 @@ class WidgetState extends State<SelectionsDemo> {
                 children: [
                   RadioListTile(
                     title: const Text('Male'),
-                      value: 1,
-                      groupValue: selectedOption,
-                      onChanged: (value) {
-                        setState(() {
-                          selectedOption = value!;
-                        });
-                      },
+                    value: 1,
+                    groupValue: selectedOption,
+                    onChanged: (value) {
+                      setState(() {
+                        selectedOption = value!;
+                      });
+                    },
                   ),
                   RadioListTile(
                     title: const Text('Female'),
-
-                      value: 2,
-                      groupValue: selectedOption,
-                      onChanged: (value) {
-                        setState(() {
-                          selectedOption = value!;
-                        });
-                      },
+                    value: 2,
+                    groupValue: selectedOption,
+                    onChanged: (value) {
+                      setState(() {
+                        selectedOption = value!;
+                      });
+                    },
                   ),
                   OutlinedButton(
                     style: OutlinedButton.styleFrom(
                       side: const BorderSide(width: 2.0, color: Colors.blue),
                     ),
                     onPressed: () {
-                    String data='';
-                    if(selectedOption==1){
-                      data='Male';
-                    }else{
-                      data='Female';
-                    }
-                    Constants.snackBar(context, 'Selected = $data', size);
+                      String data = '';
+                      if (selectedOption == 1) {
+                        data = 'Male';
+                      } else {
+                        data = 'Female';
+                      }
+                      Constants.snackBar(context, 'Selected = $data', size);
                     },
                     child: Text('Checked Data',
                         style: TextStyle(
@@ -198,6 +209,37 @@ class WidgetState extends State<SelectionsDemo> {
                 ],
               )),
           const Divider(height: 0),
+          Padding(
+            padding: EdgeInsets.all(size.width * 0.02),
+            child: Text("Switch Implementation",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: "Mulish",
+                    fontWeight: FontWeight.w500,
+                    fontSize: size.height * 0.02)),
+          ),
+          Padding(
+            padding: EdgeInsets.all(size.width * 0.02),
+            child: Switch(
+              value: isSwitch,
+              onChanged: (bool value) {
+                setState(() {
+                  isSwitch = value;
+                });
+              },
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.all(size.width * 0.02),
+            child: Switch(
+              thumbIcon: thumbIcon, value: isSwitch,
+              onChanged: (bool value) {
+                setState(() {
+                  isSwitch = value;
+                });
+              },
+            ),
+          ),
         ],
       ),
     );
