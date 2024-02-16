@@ -1,10 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_demo/screen/home.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_demo/screen/login.dart';
 import '../utils/constant.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'home.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
@@ -25,23 +27,14 @@ class SplashState extends State<Splash> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: OrientationBuilder(
-        builder: (BuildContext context, Orientation orientation) {
-          return Center(
-            child: Image(
-                width: orientation == Orientation.portrait
-                    ? size.height * 0.2
-                    : size.width * 0.2,
-                height: orientation == Orientation.portrait
-                    ? size.height * 0.2
-                    : size.width * 0.2,
-                image: const AssetImage('assets/kgk.png'),
-                fit: BoxFit.fill),
-          );
-        },
+      body: Center(
+        child: Image(
+            width: size.height * 0.2,
+            height: size.height * 0.2,
+            image: const AssetImage('assets/kgk.png'),
+            fit: BoxFit.fill),
       ),
     );
   }

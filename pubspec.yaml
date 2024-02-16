@@ -68,6 +68,9 @@ flutter_native_splash:
   image: assets/kgk.png
   color_dark: "#FFFFFF"
   image_dark: assets/kgk.png
+  android: true
+  ios: true
+  web: true
 
   # add this
   android_12:
