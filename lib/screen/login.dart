@@ -32,143 +32,184 @@ class LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
-
     return Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: Center(
-          widthFactor: double.infinity,
-          heightFactor: double.infinity,
-          child: Form(
-              key: _formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(bottom: size.height * 0.015),
-                    child: SizedBox(
-                      width: size.height * 0.15,
-                      height: size.height * 0.15,
-                      child: Image.asset(fit: BoxFit.fill, 'assets/kgk.png'),
-                    ),
-                  ),
-                  Text(
-                    Strings.digJewLib,
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: size.height * 0.025,
-                        fontFamily: 'Mulish'),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: size.height * 0.02,
-                        right: size.height * 0.02,
-                        top: size.height * 0.02,
-                        bottom: 0),
-                    child: TextFormField(
-                      controller: userControl,
-                      textInputAction: TextInputAction.next,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return Strings.enterUserId;
-                        }
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                          prefixIcon:
-                              Icon(Icons.person, size: size.height * 0.025),
-                          border: const OutlineInputBorder(),
-                          hintText: Strings.enterUserId),
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontFamily: 'Mulish',
-                          fontSize: size.height * 0.02),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: size.height * 0.02,
-                        right: size.height * 0.02,
-                        top: size.height * 0.02,
-                        bottom: size.height * 0.02),
-                    child: TextFormField(
-                      obscureText: !passwordVisible,
-                      controller: pwdControl,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return Strings.enterPassword;
-                        }
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                          prefixIcon: Icon(
-                            Icons.lock,
-                            size: size.height * 0.025,
-                          ),
-                          suffixIcon: IconButton(
-                              icon: Icon(
-                                size: size.height * 0.025,
-                                passwordVisible
-                                    ? Icons.visibility
-                                    : Icons.visibility_off,
-                                color: Theme.of(context).primaryColorDark,
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  passwordVisible = !passwordVisible;
-                                });
-                              }),
-                          border: const OutlineInputBorder(),
-                          hintText: Strings.enterPassword),
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontFamily: 'Mulish',
-                          fontSize: size.height * 0.02),
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      //TODO FORGOT PASSWORD SCREEN GOES HERE
-                    },
-                    child: Text(
-                      Strings.forgotPassword,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontFamily: "Mulish",
-                          fontSize: size.height * 0.02),
-                    ),
-                  ),
-                  Container(
-                    width: size.height * 0.3,
-                    decoration: BoxDecoration(
-                        color: const Color(0xFFEFEFEF),
-                        borderRadius: BorderRadius.circular(10)),
-                    margin: EdgeInsets.only(
-                        left: size.height * 0.02,
-                        right: size.height * 0.02,
-                        top: size.height * 0.01,
-                        bottom: 0.0),
-                    child: TextButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          loginAPICall(context);
-                          //loginAPICallPost(context);
-                        } else {
-                          Constants.snackBar(
-                              context, Strings.enterAllDetails, size);
-                        }
-                      },
-                      child: Text(
-                        Strings.login,
+      resizeToAvoidBottomInset: false,
+      body: OrientationBuilder(
+        builder: (BuildContext context, Orientation orientation) {
+          return Center(
+            child: ListView(shrinkWrap: true, children: <Widget>[
+              Form(
+                  key: _formKey,
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(bottom: size.height * 0.015),
+                        child: SizedBox(
+                          width: orientation == Orientation.portrait
+                              ? size.height * 0.15
+                              : size.width * 0.1,
+                          height: orientation == Orientation.portrait
+                              ? size.height * 0.15
+                              : size.width * 0.1,
+                          child:
+                              Image.asset(fit: BoxFit.fill, 'assets/kgk.png'),
+                        ),
+                      ),
+                      Text(
+                        Strings.digJewLib,
                         style: TextStyle(
                             color: Colors.black,
-                            fontFamily: "Mulish",
-                            fontSize: size.height * 0.025),
+                            fontSize: orientation == Orientation.portrait
+                                ? size.height * 0.025
+                                : size.width * 0.02,
+                            fontFamily: 'Mulish'),
                       ),
-                    ),
-                  ),
-                ],
-              )),
-        ));
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: orientation == Orientation.portrait
+                                ? size.height * 0.02
+                                : size.width * 0.1,
+                            right: orientation == Orientation.portrait
+                                ? size.height * 0.02
+                                : size.width * 0.1,
+                            top: orientation == Orientation.portrait
+                                ? size.height * 0.02
+                                : size.width * 0.02,
+                            bottom: 0),
+                        child: TextFormField(
+                          controller: userControl,
+                          textInputAction: TextInputAction.next,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return Strings.enterUserId;
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                              prefixIcon: Icon(Icons.person,
+                                  size: orientation == Orientation.portrait
+                                      ? size.height * 0.025
+                                      : size.width * 0.02),
+                              border: const OutlineInputBorder(),
+                              hintText: Strings.enterUserId),
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontFamily: 'Mulish',
+                              fontSize: orientation == Orientation.portrait
+                                  ? size.height * 0.02
+                                  : size.width * 0.015),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: orientation == Orientation.portrait
+                                ? size.height * 0.02
+                                : size.width * 0.1,
+                            right: orientation == Orientation.portrait
+                                ? size.height * 0.02
+                                : size.width * 0.1,
+                            top: orientation == Orientation.portrait
+                                ? size.height * 0.02
+                                : size.width * 0.02,
+                            bottom: orientation == Orientation.portrait
+                                ? size.height * 0.01
+                                : size.width * 0.005),
+                        child: TextFormField(
+                          obscureText: !passwordVisible,
+                          controller: pwdControl,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return Strings.enterPassword;
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                              prefixIcon: Icon(Icons.lock,
+                                  size: orientation == Orientation.portrait
+                                      ? size.height * 0.025
+                                      : size.width * 0.02),
+                              suffixIcon: IconButton(
+                                  icon: Icon(
+                                    size: orientation == Orientation.portrait
+                                        ? size.height * 0.025
+                                        : size.width * 0.02,
+                                    passwordVisible
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                    color: Theme.of(context).primaryColorDark,
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      passwordVisible = !passwordVisible;
+                                    });
+                                  }),
+                              border: const OutlineInputBorder(),
+                              hintText: Strings.enterPassword),
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontFamily: 'Mulish',
+                              fontSize: orientation == Orientation.portrait
+                                  ? size.height * 0.02
+                                  : size.width * 0.015),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          //TODO FORGOT PASSWORD SCREEN GOES HERE
+                        },
+                        child: Text(
+                          Strings.forgotPassword,
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontFamily: "Mulish",
+                              fontSize: orientation == Orientation.portrait
+                                  ? size.height * 0.02
+                                  : size.width * 0.015),
+                        ),
+                      ),
+                      Container(
+                        width: orientation == Orientation.portrait
+                            ? size.height * 0.3
+                            : size.width * 0.25,
+                        decoration: BoxDecoration(
+                            color: const Color(0xFFEFEFEF),
+                            borderRadius: BorderRadius.circular(10)),
+                        margin: EdgeInsets.only(
+                            left: 0,
+                            right: 0,
+                            top: orientation == Orientation.portrait
+                                ? size.height * 0.015
+                                : size.width * 0.005,
+                            bottom: 0),
+                        child: TextButton(
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              loginAPICall(context);
+                              //loginAPICallPost(context);
+                            } else {
+                              Constants.snackBar(
+                                  context, Strings.enterAllDetails, size);
+                            }
+                          },
+                          child: Text(
+                            Strings.login,
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: "Mulish",
+//                              fontSize: size.height * 0.025
+                                fontSize: orientation == Orientation.portrait
+                                    ? size.height * 0.025
+                                    : size.width * 0.02),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )),
+            ]),
+          );
+        },
+      ),
+    );
   }
 
   void loginAPICall(BuildContext context) async {
@@ -192,7 +233,7 @@ class LoginState extends State<Login> {
   }
 
   void loginAPICallPost(BuildContext context) async {
-    Constants.loader(context,Strings.loading, size);
+    Constants.loader(context, Strings.loading, size);
     LoginModel loginModel = (await ApiService()
         .sendLoginPostRequest(context, userControl.text, pwdControl.text));
     String ddd;
