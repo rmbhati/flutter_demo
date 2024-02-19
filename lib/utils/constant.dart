@@ -45,7 +45,7 @@ class Constants {
               style: TextStyle(
                   color: Colors.white,
                   fontFamily: "Mulish",
-                  fontSize: size.height * 0.015)),
+                  fontSize: size.height * 0.02)),
           duration: const Duration(seconds: 2)),
     );
   }
@@ -54,19 +54,19 @@ class Constants {
     AlertDialog alert = AlertDialog(
       content: Row(children: [
         SizedBox(
-          height: size.height * 0.04,
-          width: size.height * 0.04,
+          height: size.height * 0.05,
+          width: size.height * 0.05,
           child: const CircularProgressIndicator(
             backgroundColor: Colors.red,
           ),
         ),
         Container(
-            margin: EdgeInsets.only(left: size.height * 0.02),
+            margin: EdgeInsets.only(left: size.height * 0.025),
             child: Text(msg,
                 style: TextStyle(
                     color: Colors.black,
                     fontFamily: "Mulish",
-                    fontSize: size.height * 0.02))),
+                    fontSize: size.height * 0.025))),
       ]),
     );
     showDialog(

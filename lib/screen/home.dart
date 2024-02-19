@@ -32,6 +32,7 @@ class HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
+
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
