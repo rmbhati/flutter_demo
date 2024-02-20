@@ -83,7 +83,6 @@ class ApprovalsState extends State<ApprovalsList> {
                   Constants.snackBar(context, data[index].code, size);
                 },
                 child: Card(
-                  //margin: EdgeInsets.all(size.width * 0.015),
                   margin: EdgeInsets.all( orientation == Orientation.portrait
                       ? size.height * 0.008
                       : size.width * 0.005),
