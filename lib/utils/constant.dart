@@ -78,6 +78,19 @@ class Constants {
     );
   }
 
+  static double getToolbarHeight(Orientation orientation) {
+    if (getDeviceType() == 'phone') {
+      return orientation == Orientation.portrait ? 56 : 48;
+    } else {
+      return orientation == Orientation.portrait ? 64 : 56;
+    }
+  }
+
+  static String getDeviceType() {
+    final data = MediaQueryData.fromView(WidgetsBinding.instance.window);
+    return data.size.shortestSide < 600 ? 'phone' : 'tablet';
+  }
+
   static addIntSP(String key, int value) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setInt(key, value);

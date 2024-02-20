@@ -19,8 +19,6 @@ class HomeState extends State<Home> {
   String userName = '';
   List<HomeItems> items = [];
   late Size size;
-  late Orientation orientation;
-  int gridCount = 3;
 
   @override
   void initState() {
@@ -34,26 +32,22 @@ class HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
-    orientation = MediaQuery.of(context).orientation;
-    getOrientation();
 
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
             backgroundColor: Colors.deepPurple,
-            //toolbarHeight: Constants.getToolbarHeight(orientation),
+            toolbarHeight: size.height * 0.05,
             title: Text(Strings.digJewLib,
                 style: TextStyle(
                     color: Colors.white,
                     fontFamily: 'Mulish',
-                    fontSize: orientation == Orientation.portrait
-                        ? size.height * 0.023
-                        : size.width * 0.018)),
+                    fontSize: size.height * 0.023)),
             automaticallyImplyLeading: false,
             elevation: 10,
             centerTitle: true,
-            shape:
-            const Border(bottom: BorderSide(color: Colors.black, width: 0.1)),
+            shape: const Border(
+                bottom: BorderSide(color: Colors.black, width: 0.1)),
             actions: <Widget>[
               Padding(
                   padding: const EdgeInsets.only(right: 20.0),
@@ -65,9 +59,7 @@ class HomeState extends State<Home> {
                     },
                     child: Icon(
                       Icons.arrow_circle_down,
-                      size: orientation == Orientation.portrait
-                          ? size.height * 0.03
-                          : size.width * 0.022,
+                      size: size.height * 0.03,
                       color: Colors.white,
                     ),
                   )),
@@ -84,9 +76,7 @@ class HomeState extends State<Home> {
                       color: Colors.black54,
                       fontFamily: "Mulish",
                       fontWeight: FontWeight.w600,
-                      fontSize: orientation == Orientation.portrait
-                          ? size.height * 0.02
-                          : size.width * 0.015),
+                      fontSize: size.height * 0.02),
                 ),
               ),
               Padding(
@@ -98,9 +88,7 @@ class HomeState extends State<Home> {
                       color: Colors.black54,
                       fontFamily: "Mulish",
                       fontWeight: FontWeight.w600,
-                      fontSize: orientation == Orientation.portrait
-                          ? size.height * 0.025
-                          : size.width * 0.02),
+                      fontSize: size.height * 0.025),
                 ),
               ),
               Expanded(
@@ -108,8 +96,9 @@ class HomeState extends State<Home> {
                 padding: EdgeInsets.symmetric(horizontal: size.width * 0.02),
                 child: GridView.builder(
                     itemCount: items.length,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: gridCount),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3),
                     itemBuilder: (_, int index) {
                       return InkWell(
                           onTap: () {
@@ -121,12 +110,10 @@ class HomeState extends State<Home> {
                                   children: <Widget>[
                                 Image(
                                     width: double.infinity,
-                                    height: orientation == Orientation.portrait
-                                        ? size.height * 0.08
-                                        : size.width * 0.08,
+                                    height: size.height * 0.08,
                                     image: const AssetImage('assets/kgk.png')),
                                 Container(
-                                  margin:  const EdgeInsets.only(top:5),
+                                  margin: EdgeInsets.all(size.width * 0.02),
                                   child: Text(items[index].name,
                                       textAlign: TextAlign.center,
                                       maxLines: 1,
@@ -135,9 +122,7 @@ class HomeState extends State<Home> {
                                           color: Colors.black54,
                                           fontFamily: "Mulish",
                                           fontWeight: FontWeight.w600,
-                                          fontSize: orientation == Orientation.portrait
-                                              ? size.height * 0.02
-                                              : size.width * 0.015)),
+                                          fontSize: size.height * 0.02)),
                                 )
                               ])));
                     }),
@@ -162,16 +147,5 @@ class HomeState extends State<Home> {
     } else {
       Constants.snackBar(context, from, size);
     }
-  }
-
-  void getOrientation() {
-    Orientation orientation = MediaQuery.of(context).orientation;
-    setState(() {
-      if (orientation == Orientation.portrait) {
-        gridCount = 3;
-      } else {
-        gridCount = 5;
-      }
-    });
   }
 }
