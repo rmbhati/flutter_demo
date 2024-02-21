@@ -30,18 +30,18 @@ class WidgetState extends State<WidgetListing> {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;   Orientation orientation = MediaQuery.of(context).orientation;
-
+    final size = MediaQuery.of(context).size;
+    Orientation orientation = MediaQuery.of(context).orientation;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar:
-      AppBar(
+      appBar: AppBar(
           backgroundColor: Colors.deepPurple,
           leading: IconButton(
             icon: Icon(Icons.arrow_back,
                 size: orientation == Orientation.portrait
                     ? size.height * 0.025
-                    : size.width * 0.02, color: Colors.white),
+                    : size.width * 0.02,
+                color: Colors.white),
             onPressed: () => Navigator.of(context).pop(),
           ),
           title: Text(widget.title,
@@ -53,8 +53,8 @@ class WidgetState extends State<WidgetListing> {
                       : size.width * 0.018)),
           automaticallyImplyLeading: false,
           elevation: 10,
-          shape:
-          const Border(bottom: BorderSide(color: Colors.black, width: 0.1))),
+          shape: const Border(
+              bottom: BorderSide(color: Colors.black, width: 0.1))),
       body: ListView.builder(
           itemCount: items.length,
           itemBuilder: (context, index) {
@@ -63,11 +63,11 @@ class WidgetState extends State<WidgetListing> {
                   itemClick(context, items[index].name, size);
                 },
                 child: Card(
-                  margin: EdgeInsets.all( orientation == Orientation.portrait
+                  margin: EdgeInsets.all(orientation == Orientation.portrait
                       ? size.height * 0.008
                       : size.width * 0.005),
                   child: Padding(
-                    padding: EdgeInsets.all( orientation == Orientation.portrait
+                    padding: EdgeInsets.all(orientation == Orientation.portrait
                         ? size.height * 0.02
                         : size.width * 0.015),
                     child: Text(items[index].name,

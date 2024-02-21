@@ -23,25 +23,30 @@ class WidgetState extends State<TextEditDemo> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    Orientation orientation = MediaQuery.of(context).orientation;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        backgroundColor: Colors.deepPurple,
-        toolbarHeight: size.height * 0.05,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back,
-              size: size.height * 0.03, color: Colors.white),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        title: Text(widget.title,
-            style: TextStyle(
-                color: Colors.white,
-                fontFamily: 'Mulish',
-                fontSize: size.height * 0.023)),
-        elevation: 10,
-        shape:
-            const Border(bottom: BorderSide(color: Colors.black, width: 0.1)),
-      ),
+      appBar:  AppBar(
+          backgroundColor: Colors.deepPurple,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back,
+                size: orientation == Orientation.portrait
+                    ? size.height * 0.025
+                    : size.width * 0.02,
+                color: Colors.white),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          title: Text(widget.title,
+              style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'Mulish',
+                  fontSize: orientation == Orientation.portrait
+                      ? size.height * 0.023
+                      : size.width * 0.018)),
+          automaticallyImplyLeading: false,
+          elevation: 10,
+          shape: const Border(
+              bottom: BorderSide(color: Colors.black, width: 0.1))),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
