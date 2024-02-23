@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+//List of data comes in response
 List<UserModel> userModelFromJson(String str) =>
     List<UserModel>.from(json.decode(str).map((x) => UserModel.fromJson(x)));
 

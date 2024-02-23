@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_demo/screen/login/login_view_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../utils/constant.dart';
-import '../model/login_model.dart';
-import '../service/api_service.dart';
+import '../../utils/constant.dart';
+import 'login_model.dart';
+import '../../service/api_service.dart';
 
-import '../utils/strings.dart';
-import 'home.dart';
+import '../../utils/strings.dart';
+import '../home.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -16,11 +17,13 @@ class Login extends StatefulWidget {
 }
 
 class LoginState extends State<Login> {
-  final _formKey = GlobalKey<FormState>();
+  final LoginViewModel viewModel = LoginViewModel();
+
+  //viewModel = Provider.of<LoginViewModel>(context);
+
   final userControl = TextEditingController();
   final pwdControl = TextEditingController();
   bool passwordVisible = false;
-  late Size size;
 
   @override
   void dispose() {
@@ -31,7 +34,9 @@ class LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    size = MediaQuery.of(context).size;
+    Size size = MediaQuery.of(context).size;
+    //viewModel = Provider.of<LoginViewModel>(context);
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: OrientationBuilder(
@@ -39,7 +44,7 @@ class LoginState extends State<Login> {
           return Center(
             child: ListView(shrinkWrap: true, children: <Widget>[
               Form(
-                  key: _formKey,
+                  key: viewModel.formKey,
                   child: Column(
                     children: <Widget>[
                       Padding(
@@ -78,12 +83,10 @@ class LoginState extends State<Login> {
                             bottom: 0),
                         child: TextFormField(
                           controller: userControl,
+                          keyboardType: TextInputType.name,
                           textInputAction: TextInputAction.next,
                           validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return Strings.enterUserId;
-                            }
-                            return null;
+                            return viewModel.validateUsername(value!);
                           },
                           decoration: InputDecoration(
                               prefixIcon: Icon(Icons.person,
@@ -118,10 +121,7 @@ class LoginState extends State<Login> {
                           obscureText: !passwordVisible,
                           controller: pwdControl,
                           validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return Strings.enterPassword;
-                            }
-                            return null;
+                            return viewModel.validatePassword(value!);
                           },
                           decoration: InputDecoration(
                               prefixIcon: Icon(Icons.lock,
@@ -182,21 +182,17 @@ class LoginState extends State<Login> {
                                 : size.width * 0.005,
                             bottom: 0),
                         child: TextButton(
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              loginAPICall(context);
-                              //loginAPICallPost(context);
-                            } else {
-                              Constants.snackBar(
-                                  context, Strings.enterAllDetails, size);
-                            }
+                          onPressed: () async {
+                            Constants.loader(context, Strings.loading, size);
+                            LoginModel loginModel = (await viewModel.login(
+                                context, userControl.text, pwdControl.text));
+                            loginResult(loginModel,size);
                           },
                           child: Text(
                             Strings.login,
                             style: TextStyle(
                                 color: Colors.black,
                                 fontFamily: "Mulish",
-//                              fontSize: size.height * 0.025
                                 fontSize: orientation == Orientation.portrait
                                     ? size.height * 0.025
                                     : size.width * 0.02),
@@ -212,6 +208,23 @@ class LoginState extends State<Login> {
     );
   }
 
+  void loginResult(LoginModel loginModel, Size size) {
+    Navigator.pop(context); //hide loader/back press
+    String msg;
+    if (loginModel.sts == "true") {
+      msg =
+          "${loginModel.sts} : ${loginModel.message}\nINFO\n${loginModel.data?[0].empID} ${loginModel.data?[0].fullName}";
+      Constants.addIntSP(Constants.userId, loginModel.data![0].empID);
+      Constants.addStringSP(Constants.userName, loginModel.data![0].fullName);
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (_) => const Home()));
+    } else {
+      msg = loginModel.message;
+    }
+    Constants.snackBar(context, msg, size);
+  }
+
+/*
   void loginAPICall(BuildContext context) async {
     Constants.loader(context, Strings.loading, size);
     LoginModel loginModel =
@@ -231,7 +244,9 @@ class LoginState extends State<Login> {
     }
     Constants.snackBar(context, ddd, size);
   }
+*/
 
+/*
   void loginAPICallPost(BuildContext context) async {
     Constants.loader(context, Strings.loading, size);
     LoginModel loginModel = (await ApiService()
@@ -246,4 +261,5 @@ class LoginState extends State<Login> {
     Constants.snackBar(context, ddd, size);
     //Navigator.push(context, MaterialPageRoute(builder: (_) => const Home()));
   }
+*/
 }

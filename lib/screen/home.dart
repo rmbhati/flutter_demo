@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/screen/approval_list.dart';
-import 'package:flutter_demo/screen/login.dart';
+import 'package:flutter_demo/screen/login/login_view.dart';
 import 'package:flutter_demo/screen/widgets/widget_listing.dart';
 import '../utils/constant.dart';
 import 'package:shared_preferences/shared_preferences.dart';

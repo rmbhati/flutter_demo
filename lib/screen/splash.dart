@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/screen/home.dart';
-import 'package:flutter_demo/screen/login.dart';
+import 'package:flutter_demo/screen/login/login_view.dart';
 import '../utils/constant.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

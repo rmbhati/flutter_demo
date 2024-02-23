@@ -46,3 +46,4 @@ class LoginData {
         "FULL_NAME": fullName,
       };
 }
+
