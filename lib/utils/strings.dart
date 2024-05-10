@@ -21,6 +21,7 @@ class Strings {
   static String wDropdown= 'Dropdown Widgets';
 
 
-  static String menu3= 'Menu 3';
+  static String menu3= '3D View';
+  static String menu_html= 'HTML';
 
 }

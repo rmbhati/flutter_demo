@@ -67,8 +67,12 @@ class ApprovalsState extends State<ApprovalsList> {
 
   @override
   Widget build(BuildContext context) {
-    size = MediaQuery.of(context).size;
-    Orientation orientation = MediaQuery.of(context).orientation;
+    size = MediaQuery
+        .of(context)
+        .size;
+    Orientation orientation = MediaQuery
+        .of(context)
+        .orientation;
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
@@ -112,14 +116,16 @@ class ApprovalsState extends State<ApprovalsList> {
                   icon: const Icon(Icons.cancel),
                   onPressed: () {
                     controller.clear();
-                    FocusScope.of(context).unfocus();//hide keyboard
+                    FocusScope.of(context).unfocus(); //hide keyboard
                     onSearchTextChanged('');
                   },
                 ),
               ),
             ),
             Expanded(
-              child: searchData.isNotEmpty || controller.text.isNotEmpty
+                child:
+
+              searchData.isNotEmpty || controller.text.isNotEmpty
                   ? ListView.builder(
                       itemCount: searchData.length,
                       itemBuilder: (context, index) {

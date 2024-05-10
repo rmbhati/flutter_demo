@@ -142,6 +142,33 @@ class WidgetState extends State<ButtonsDemo> {
                   side: const BorderSide(width: 2.0, color: Colors.blue)),
             ),
           ),
+          Padding(
+            padding: EdgeInsets.all(size.width * 0.02),
+            child: const Chip(
+              label: Text('Chip'),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.all(size.width * 0.02),
+            child: const InputChip(
+              avatar: Icon(Icons.remove),
+              label: Text('InputChip'),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.all(size.width * 0.02),
+            child: const ChoiceChip(
+              selected: true,
+              label: Text('ChoiceChip'),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.all(size.width * 0.02),
+            child: const ActionChip(
+              avatar: Icon(Icons.favorite),
+              label: Text('Action 1'),
+            ),
+          ),
         ],
       ),
     );

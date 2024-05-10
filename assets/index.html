@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<input type="hidden" id="messageFromFlutter" value=""/>
+<div id="canvasContainer" style="position: relative;">
+    <canvas style="width:100%; height: 100%;" id="mcanvas"></canvas>
+    <div id="mconfigurator"></div>
+    <div id="selecteddata" style="color: red"></div>
+    <div class="buttons">
+        <button id="myToggleButton" class="btn btn-outline-secondary" value="OFF"><i
+                class="fa-solid fa-play fa-fw"></i></button>
+        <button id="download" class="btn btn-outline-secondary" title="Snapshot"><i
+                class="fa-solid fa-circle-down fa-fw"></i></button>
+        <button id="fullscreenCanvas" class="btn btn-outline-secondary" title="Fullscreen"><i
+                class="fa-solid fa-expand fa-fw"></i></button>
+    </div>
+</div>
+
+<script src="assets/js/bootstrap.min.js" crossorigin="anonymous"></script>
+<script src="assets/js/all.min.js" crossorigin="anonymous"></script>
+<script src="assets/js/bundle-0.9.5-dev.4.js"> </script>
+
+<script>
+         window.addEventListener("flutterInAppWebViewPlatformReady", function(event) {
+                window.flutter_inappwebview.callHandler('handlerFoo')
+                  .then(function(result) {
+                    console.log("Ramesh "+JSON.stringify(result));
+                    console.log("Ramesh " +result.style)
+                    showviewer(result.style);
+                });
+            });
+
+        function receiveMessageFromFlutter(message) {
+            document.getElementById('messageFromFlutter').value = message;
+            showviewer(message);
+        }
+
+        class CustomMaterialConfiguratorPlugin extends MaterialConfiguratorBasePlugin {
+            static PluginType = "MaterialConfiguratorPlugin";
+
+            async _refreshUi() {
+                if (!(await super._refreshUi())) return false;
+                const configuratorDiv = document.getElementById("mconfigurator");
+                var selectData = {}
+                configuratorDiv.innerHTML = "";
+                console.log("this.variations -- ", this.variations)
+
+                this.variations.forEach((variation) => {
+                    const container = document.createElement("div");
+                    container.classList.add("variations");
+                    container.id = variation.uuid.replace(/ /g, "_");
+
+                    const titleDiv = document.createElement("div");
+                    titleDiv.classList.add("mat-title");
+                    titleDiv.textContent = variation.uuid;
+                    container.appendChild(titleDiv);
+
+                    const btnWrapper = document.createElement("div");
+                    btnWrapper.classList.add("btn-wrapper");
+                    container.appendChild(btnWrapper);
+
+                    variation.materials.forEach((material) => {
+                        const imagePath = (variation.uuid === "Metal Colour" || variation.uuid.startsWith("Metal")) ?
+                            `assets/images/metal/${material.name.replaceAll(" ", '_')}.png` :
+                            `assets/images/gem/${material.name.replaceAll(" ", '_')}.png`;
+
+                        const onClick = (e) => {
+                            this.applyVariation(variation, material.uuid);
+                            selectData[variation.uuid] = variation.uuid + " - " + material.name
+                            document.getElementById("selecteddata").innerHTML = "<ul class='list-group list-group-numbered'>"
+                                + Object.keys(selectData).map(state => "<li class='list-group-item'>" + selectData[state] + "</li>").join("") +
+                                "</ul>"
+                        };
+
+                        const button = document.createElement("div");
+                        button.classList.add("btnset");
+                        button.onclick = onClick;
+
+                        const image = document.createElement("img");
+                        image.src = imagePath;
+                        image.title = material.name;
+
+                        button.appendChild(image);
+
+                        btnWrapper.appendChild(button);
+                    });
+
+                    configuratorDiv.appendChild(container);
+                });
+
+                return true;
+            }
+        }
+
+
+        async function setupViewer(data) {
+            const viewer = new ViewerApp({
+                canvas: document.getElementById("mcanvas"),
+            });
+
+           await addBasePlugins(viewer);
+
+            const loadingScreen = await viewer.getOrAddPlugin(LoadingScreenPlugin);
+            loadingScreen.logoImage = "assets/images/kgk-logo.png"
+            loadingScreen.loadingTextHeader = "Loading KGK Jewel 3D View";
+            loadingScreen.showFileNames = false;
+
+            await viewer.addPlugin(CustomMaterialConfiguratorPlugin);
+
+            await viewer.addPlugin(FileTransferPlugin);
+            const snipper = await viewer.addPlugin(CanvasSnipperPlugin);
+            console.log(snipper);
+
+            viewer.renderer.refreshPipeline();
+            const obj = await viewer.load('https://dev.kgkdms.com/imageserver/'+data+'_GLB.glb');
+
+            var onDownload = () => {
+                var currentdate = new Date();
+                var datetime = currentdate.getDate() + "_" + (currentdate.getMonth() + 1) + "_" + currentdate.getFullYear() + "_"
+                    + currentdate.getHours() + "_" + currentdate.getMinutes() + "_" + currentdate.getSeconds();
+                snipper.downloadSnapshot(data + "_" + datetime + ".png", {
+                    waitForProgressive: true,
+                });
+            }
+
+            var onCloseHandle = async () => {
+                await viewer.scene.removeSceneModels();
+                await viewer.dispose()
+            }
+
+            const controls = viewer.scene.activeCamera.controls;
+            controls.autoRotate = false;
+            controls.autoRotateSpeed = 5;
+            controls.enableDamping = false;
+            controls.rotateSpeed = 2.0;
+            controls.enableZoom = true;
+
+            var fullscreenCanvasHandle = () => {
+                viewer.getPlugin(FullScreenPlugin).enter();
+            };
+
+            var myToggleButtonHandle = () => {
+                console.log(document.getElementById("myToggleButton").value)
+                if (document.getElementById("myToggleButton").value === "OFF") {
+                    document.getElementById("myToggleButton").value = "ON";
+                    document.getElementById("myToggleButton").innerHTML = '<i class="fa-solid fa-pause fa-fw"></i>';
+                    controls.autoRotate = true;
+                    return
+                }
+
+                else if (document.getElementById("myToggleButton").value === "ON") {
+                    document.getElementById("myToggleButton").value = "OFF";
+                    document.getElementById("myToggleButton").innerHTML = '<i class="fa-solid fa-play fa-fw"></i>';
+                    controls.autoRotate = false;
+                    return
+                }
+            }
+
+            return { onDownload, onCloseHandle, fullscreenCanvasHandle, myToggleButtonHandle }
+        }
+
+        async function showviewer(e) {
+
+            console.log("Ramesh showviewer " +e)
+
+            const setup = await setupViewer(e);
+            document.getElementById("download").addEventListener("click", setup.onDownload);
+            document.getElementById("onClose").addEventListener("click", setup.onCloseHandle);
+            document.getElementById("fullscreenCanvas").addEventListener("click", setup.fullscreenCanvasHandle); //.onclick = setup.fullscreenCanvasHandle
+            document.getElementById("myToggleButton").addEventListener("click", setup.myToggleButtonHandle)
+       }
+
+</script>
+</body>
+</html>

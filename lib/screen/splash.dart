@@ -3,8 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/screen/home.dart';
 import 'package:flutter_demo/screen/login/login_view.dart';
+
+//import 'package:o3d/o3d.dart';
 import '../utils/constant.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:model_viewer_plus/model_viewer_plus.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
@@ -15,6 +18,8 @@ class Splash extends StatefulWidget {
 
 class SplashState extends State<Splash> {
   int userId = 0;
+
+  //O3DController controller = O3DController();
 
   @override
   void initState() {
@@ -56,7 +61,7 @@ class SplashState extends State<Splash> {
       }
     });
 
-    Timer(const Duration(seconds: 2), () {
+    Timer(const Duration(seconds: 1), () {
       if (userId == null || userId == 0) {
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (_) => const Login()));

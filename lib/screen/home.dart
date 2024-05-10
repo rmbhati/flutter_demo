@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_demo/screen/approval_list.dart';
 import 'package:flutter_demo/screen/login/login_view.dart';
+import 'package:flutter_demo/screen/widgets/3dview.dart';
+import 'package:flutter_demo/screen/widgets/html.dart';
+import 'package:flutter_demo/screen/widgets/htmlsend.dart';
 import 'package:flutter_demo/screen/widgets/widget_listing.dart';
 import '../utils/constant.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -29,6 +32,7 @@ class HomeState extends State<Home> {
     items.add(HomeItems(name: Strings.approvals));
     items.add(HomeItems(name: Strings.widgets));
     items.add(HomeItems(name: Strings.menu3));
+    items.add(HomeItems(name: Strings.menu_html));
   }
 
   @override
@@ -36,7 +40,6 @@ class HomeState extends State<Home> {
     size = MediaQuery.of(context).size;
     orientation = MediaQuery.of(context).orientation;
     getOrientation();
-
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
@@ -109,6 +112,8 @@ class HomeState extends State<Home> {
                 child: GridView.builder(
                     itemCount: items.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      mainAxisSpacing: size.height * 0.01,
+                        crossAxisSpacing: size.height * 0.01,
                         crossAxisCount: gridCount),
                     itemBuilder: (_, int index) {
                       return InkWell(
@@ -159,6 +164,15 @@ class HomeState extends State<Home> {
     } else if (from == Strings.widgets) {
       Navigator.push(context,
           MaterialPageRoute(builder: (_) => WidgetListing(title: from)));
+    }  else if (from == Strings.menu3) {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (_) => ThreeDView(title: from)));
+    } else if (from == Strings.menu_html) {
+      //101413 //KE302632A
+      Navigator.push(context,
+          MaterialPageRoute(builder: (_) => HTMLView(title: "KE302632A")));
+    /*  Navigator.push(context,
+          MaterialPageRoute(builder: (_) => HTMLSent(title: "KE302632A")));*/
     } else {
       Constants.snackBar(context, from, size);
     }
