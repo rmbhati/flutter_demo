@@ -33,7 +33,7 @@ enum IconLabel {
 List<String> list = <String>['One', 'Two', 'Three', 'Four'];
 
 class DropdownDemo extends StatefulWidget {
-  const DropdownDemo({Key? key, required this.title}) : super(key: key);
+  const DropdownDemo({super.key, required this.title});
   final String title;
 
   @override

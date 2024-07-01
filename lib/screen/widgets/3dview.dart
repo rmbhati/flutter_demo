@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:model_viewer_plus/model_viewer_plus.dart';
 
-import '../../utils/constant.dart';
 
 class ThreeDView extends StatefulWidget {
-  const ThreeDView({Key? key, required this.title}) : super(key: key);
+  const ThreeDView({super.key, required this.title});
   final String title;
 
   @override
@@ -39,7 +38,7 @@ class WidgetState extends State<ThreeDView> {
             elevation: 10,
             shape: const Border(
                 bottom: BorderSide(color: Colors.black, width: 0.1))),
-        body: ModelViewer(
+        body: const ModelViewer(
           backgroundColor: Colors.transparent,
           //src: 'https://modelviewer.dev/shared-assets/models/Astronaut.glb',
           //src: 'http://10.100.24.183/jewelviewer/KR605705.glb',

@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Strings {
   static String digJewLib = 'Digital Jewelry Library'; 

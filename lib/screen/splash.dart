@@ -7,7 +7,6 @@ import 'package:flutter_demo/screen/login/login_view.dart';
 //import 'package:o3d/o3d.dart';
 import '../utils/constant.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:model_viewer_plus/model_viewer_plus.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
@@ -62,7 +61,7 @@ class SplashState extends State<Splash> {
     });
 
     Timer(const Duration(seconds: 1), () {
-      if (userId == null || userId == 0) {
+      if (userId == 0) {
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (_) => const Login()));
       } else {

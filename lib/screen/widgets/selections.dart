@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../utils/constant.dart';
 
 class SelectionsDemo extends StatefulWidget {
-  const SelectionsDemo({Key? key, required this.title}) : super(key: key);
+  const SelectionsDemo({super.key, required this.title});
   final String title;
 
   @override
@@ -17,10 +17,9 @@ class WidgetState extends State<SelectionsDemo> {
   int selectedOption = 1;
   bool isSwitch = false;
 
-  final MaterialStateProperty<Icon?> thumbIcon =
-  MaterialStateProperty.resolveWith<Icon?>(
-        (Set<MaterialState> states) {
-      if (states.contains(MaterialState.selected)) {
+  final WidgetStateProperty<Icon?> thumbIcon = WidgetStateProperty.resolveWith<Icon?>(
+        (Set<WidgetState> states) {
+      if (states.contains(WidgetState.selected)) {
         return const Icon(Icons.check);
       }
       return const Icon(Icons.close);

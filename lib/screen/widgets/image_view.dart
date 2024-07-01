@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../utils/constant.dart';
 
 class ImageViewDemo extends StatefulWidget {
-  const ImageViewDemo({Key? key, required this.title}) : super(key: key);
+  const ImageViewDemo({super.key, required this.title});
   final String title;
 
   @override

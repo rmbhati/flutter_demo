@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_demo/screen/login/login_view_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../utils/constant.dart';
 import 'login_model.dart';
-import '../../service/api_service.dart';
 
 import '../../utils/strings.dart';
 import '../home.dart';

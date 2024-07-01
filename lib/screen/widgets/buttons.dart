@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../utils/constant.dart';
 
 class ButtonsDemo extends StatefulWidget {
-  const ButtonsDemo({Key? key, required this.title}) : super(key: key);
+  const ButtonsDemo({super.key, required this.title});
   final String title;
 
   @override
@@ -48,7 +48,7 @@ class WidgetState extends State<ButtonsDemo> {
                 Constants.snackBar(context, "Button clicked", size);
               },
               style: const ButtonStyle(
-                backgroundColor: MaterialStatePropertyAll(Colors.red),
+                backgroundColor: WidgetStatePropertyAll(Colors.red),
               ),
               child: Text(
                 "TextButton Normal",
@@ -98,7 +98,7 @@ class WidgetState extends State<ButtonsDemo> {
                       fontWeight: FontWeight.w600,
                       fontSize: size.height * 0.02)),
               style: const ButtonStyle(
-                backgroundColor: MaterialStatePropertyAll(Colors.red),
+                backgroundColor: WidgetStatePropertyAll(Colors.red),
               ),
             ),
           ),

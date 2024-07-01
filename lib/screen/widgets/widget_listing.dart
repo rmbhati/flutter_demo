@@ -8,7 +8,7 @@ import 'package:flutter_demo/utils/strings.dart';
 import '../../model/home_model.dart';
 
 class WidgetListing extends StatefulWidget {
-  const WidgetListing({Key? key, required this.title}) : super(key: key);
+  const WidgetListing({super.key, required this.title});
   final String title;
 
   @override

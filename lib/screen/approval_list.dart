@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../utils/strings.dart';
 
 class ApprovalsList extends StatefulWidget {
-  const ApprovalsList({Key? key, required this.title}) : super(key: key);
+  const ApprovalsList({super.key, required this.title});
   final String title;
 
   @override

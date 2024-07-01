@@ -3,7 +3,6 @@ import 'package:flutter_demo/screen/approval_list.dart';
 import 'package:flutter_demo/screen/login/login_view.dart';
 import 'package:flutter_demo/screen/widgets/3dview.dart';
 import 'package:flutter_demo/screen/widgets/html.dart';
-import 'package:flutter_demo/screen/widgets/htmlsend.dart';
 import 'package:flutter_demo/screen/widgets/widget_listing.dart';
 import '../utils/constant.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -64,7 +63,7 @@ class HomeState extends State<Home> {
                     onTap: () {
                       Constants.addIntSP(Constants.userId, 0);
                       Navigator.pushReplacement(
-                          context, MaterialPageRoute(builder: (_) => Login()));
+                          context, MaterialPageRoute(builder: (_) => const Login()));
                     },
                     child: Icon(
                       Icons.arrow_circle_down,
@@ -170,7 +169,7 @@ class HomeState extends State<Home> {
     } else if (from == Strings.menu_html) {
       //101413 //KE302632A
       Navigator.push(context,
-          MaterialPageRoute(builder: (_) => HTMLView(title: "KE302632A")));
+          MaterialPageRoute(builder: (_) => const HTMLView(title: "KE302632A")));
     /*  Navigator.push(context,
           MaterialPageRoute(builder: (_) => HTMLSent(title: "KE302632A")));*/
     } else {

@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:model_viewer_plus/model_viewer_plus.dart';
 
-import '../../utils/constant.dart';
 
 class HTMLView extends StatefulWidget {
-  const HTMLView({Key? key, required this.title}) : super(key: key);
+  const HTMLView({super.key, required this.title});
   final String title;
 
   @override

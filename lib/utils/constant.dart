@@ -16,7 +16,7 @@ class Constants {
   static alertDialog(BuildContext context, String message) {
     // set up the button
     Widget okButton = TextButton(
-      child: Text("OK"),
+      child: const Text("OK"),
       onPressed: () {},
     );
 

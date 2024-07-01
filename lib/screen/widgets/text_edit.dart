@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class TextEditDemo extends StatefulWidget {
-  const TextEditDemo({Key? key, required this.title}) : super(key: key);
+  const TextEditDemo({super.key, required this.title});
   final String title;
 
   @override
